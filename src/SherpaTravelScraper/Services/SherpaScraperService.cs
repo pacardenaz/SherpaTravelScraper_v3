@@ -350,17 +350,10 @@ public class SherpaScraperService : IAsyncDisposable
         try
         {
             // 0) Cerrar banner de cookies si aparece (no bloqueante)
-            try
+            if (await TryJsClickIfVisibleAsync(page, "button:has-text('Accept all cookies')", 1500))
             {
-                var cookieBtn = page.Locator("button:has-text('Accept all cookies')").First;
-                if (await cookieBtn.IsVisibleAsync(new() { Timeout = 1500 }))
-                {
-                    await cookieBtn.ClickAsync(new() { Timeout = 2000 });
-                    await page.WaitForTimeoutAsync(300);
-                    _logger.LogInformation("✅ Cookies aceptadas");
-                }
+                _logger.LogInformation("✅ Cookies aceptadas");
             }
-            catch { /* no-op */ }
 
             // 1) Abrir formulario solo si no está visible
             var whereFrom = page.Locator("button:has-text('Where from')").First;
@@ -373,19 +366,13 @@ public class SherpaScraperService : IAsyncDisposable
 
             if (!formVisible)
             {
-                try
+                if (await TryJsClickIfVisibleAsync(page, "button:has-text('Change')", 1500))
                 {
-                    var changeBtn = page.Locator("button:has-text('Change')").First;
-                    if (await changeBtn.IsVisibleAsync(new() { Timeout = 1500 }))
-                    {
-                        await changeBtn.ClickAsync(new() { Timeout = 2000 });
-                        await page.WaitForTimeoutAsync(400);
-                        _logger.LogInformation("✅ Botón 'Change' clickeado");
-                    }
+                    _logger.LogInformation("✅ Botón 'Change' clickeado");
                 }
-                catch
+                else
                 {
-                    _logger.LogDebug("'Change' no disponible, continuando...");
+                    _logger.LogDebug("'Change' no disponible/interactuable, continuando...");
                 }
             }
 
@@ -433,6 +420,26 @@ public class SherpaScraperService : IAsyncDisposable
             _logger.LogError(ex, "❌ Error llenando formulario");
             // No lanzar excepción, intentar continuar
         }
+    }
+
+    private async Task<bool> TryJsClickIfVisibleAsync(IPage page, string selector, int timeoutMs = 1200)
+    {
+        try
+        {
+            var loc = page.Locator(selector).First;
+            if (await loc.IsVisibleAsync(new() { Timeout = timeoutMs }))
+            {
+                // JS click evita timeouts de Playwright cuando un overlay interfiere el pointer event
+                await loc.EvaluateAsync("el => (el instanceof HTMLElement) && el.click()");
+                await page.WaitForTimeoutAsync(200);
+                return true;
+            }
+        }
+        catch
+        {
+            // no-op
+        }
+        return false;
     }
 
     private async Task SeleccionarPaisEnCampoAsync(IPage page, string fieldLabel, string countryName)
