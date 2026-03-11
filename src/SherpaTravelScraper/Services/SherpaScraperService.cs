@@ -1949,6 +1949,11 @@ public class SherpaScraperService : IAsyncDisposable
 
             page = await context.NewPageAsync();
 
+            // Configurar collector para interceptar API trips
+            var networkCollector = new NetworkJsonCollector(_logger);
+            page.Response += networkCollector.OnResponseAsync;
+            networkCollector.SetSegment(TabExtraccion.Departure);
+
             // Ejecutar scripts de stealth
             foreach (var script in StealthConfig.StealthScripts)
             {
@@ -1977,6 +1982,23 @@ public class SherpaScraperService : IAsyncDisposable
             
             // Delay anti-detección
             await Task.Delay(_stealthConfig.GetRandomDelayMs() / 2);
+
+            // Verificar si se capturó JSON de la API trips
+            if (networkCollector.HasValidJsonFor(TabExtraccion.Departure))
+            {
+                var jsonPayload = networkCollector.GetLatestPayload(TabExtraccion.Departure);
+                _logger.LogInformation("📡 JSON de API trips capturado: {Size} chars", jsonPayload?.Length ?? 0);
+                
+                return ScrapingResult.Success(
+                    departureHtml: jsonPayload,
+                    returnHtml: null,
+                    method: ScrapingMethod.DirectUrl,
+                    urlUsed: urlDirecta,
+                    duration: TimeSpan.Zero);
+            }
+            
+            // Si no se capturó JSON, continuar con verificación de contenido HTML
+            _logger.LogDebug("No se capturó JSON de API trips, verificando contenido HTML...");
             
             // Verificar contenido cargado
             var contentVerifierLogger = NullLogger<ContentVerifier>.Instance;
