@@ -1499,26 +1499,50 @@ public class SherpaScraperService : IAsyncDisposable
 
     private async Task ActivarTabAsync(IPage page, string tabNombre)
     {
-        var selectors = new[]
+        // Selectores mejorados para mayor cobertura
+        var nombresAlternativos = tabNombre.ToLower() switch
         {
-            $"button[data-testid='{tabNombre.ToLower()}-tab']",
-            $"button:has-text('{tabNombre}')",
-            $"[role='tab']:has-text('{tabNombre}')",
-            $"a:has-text('{tabNombre}')"
+            "departure" => new[] { "Departure", "Salida", "departure", "salida" },
+            "return" => new[] { "Return", "Regreso", "return", "regreso" },
+            _ => new[] { tabNombre }
         };
+
+        var selectors = new List<string>
+        {
+            $"[data-testid='{tabNombre.ToLower()}-tab']",
+            $"button[id*='{tabNombre.ToLower()}']",
+            $"[role='tab'][id*='{tabNombre.ToLower()}']"
+        };
+
+        // Agregar selectores con textos alternativos
+        foreach (var nombre in nombresAlternativos)
+        {
+            selectors.Add($"button:has-text('{nombre}')");
+            selectors.Add($"[role='tab']:has-text('{nombre}')");
+            selectors.Add($"a:has-text('{nombre}')");
+        }
 
         foreach (var selector in selectors)
         {
             try
             {
-                if (await page.Locator(selector).CountAsync() > 0)
+                var element = await page.QuerySelectorAsync(selector);
+                if (element != null)
                 {
-                    await page.ClickAsync(selector);
-                    await Task.Delay(1200);
-                    return;
+                    var isVisible = await element.IsVisibleAsync();
+                    if (isVisible)
+                    {
+                        await element.ClickAsync();
+                        _logger.LogDebug("Tab {Tab} clickeado con selector: {Selector}", tabNombre, selector);
+                        await Task.Delay(1500); // Esperar más tiempo para que cargue
+                        return;
+                    }
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                _logger.LogTrace("Error con selector {Selector}: {Error}", selector, ex.Message);
+            }
         }
 
         _logger.LogWarning("No se pudo activar tab {Tab}", tabNombre);
