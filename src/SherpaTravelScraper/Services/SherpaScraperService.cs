@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Concurrent;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Playwright;
 using SherpaTravelScraper.Utils;
 
@@ -26,6 +27,7 @@ public class SherpaScraperService : IAsyncDisposable
     private readonly StealthConfig _stealthConfig;
     private readonly AiExtractionService? _aiService;
     private readonly IConfiguration _configuration;
+    private readonly UrlBuilderService _urlBuilder;
     private IPlaywright? _playwright;
     private IBrowser? _browser;
     private bool _disposed;
@@ -34,12 +36,14 @@ public class SherpaScraperService : IAsyncDisposable
         ILogger<SherpaScraperService> logger,
         StealthConfig stealthConfig,
         IConfiguration configuration,
-        AiExtractionService? aiService = null)
+        AiExtractionService? aiService = null,
+        UrlBuilderService? urlBuilder = null)
     {
         _logger = logger;
         _stealthConfig = stealthConfig;
         _configuration = configuration;
         _aiService = aiService;
+        _urlBuilder = urlBuilder ?? new UrlBuilderService(NullLogger<UrlBuilderService>.Instance);
     }
 
     /// <summary>
@@ -1855,6 +1859,355 @@ public class SherpaScraperService : IAsyncDisposable
                  !string.IsNullOrWhiteSpace(GetLatestPayload(TabExtraccion.Return))
         };
     }
+
+    #region REQ-SHERPA-003: Estrategia Híbrida de Scraping
+
+    /// <summary>
+    /// Realiza scraping usando estrategia híbrida:
+    /// 1. Intenta navegación directa por URL con parámetros
+    /// 2. Si falla, hace fallback a llenado de formulario
+    /// </summary>
+    public async Task<ScrapingResult> ScrapearConEstrategiaHibridaAsync(
+        string origenIso3,
+        string destinoIso3,
+        string idioma,
+        DateTime fechaBase,
+        string? tipoNacionalidad = null)
+    {
+        if (_browser == null)
+            throw new InvalidOperationException("El servicio no ha sido inicializado. Llame a InicializarAsync primero.");
+
+        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        var tabExtraccion = ResolverTabExtraccion(tipoNacionalidad);
+        
+        _logger.LogInformation("🚀 REQ-SHERPA-003: Iniciando scraping híbrido - {Origen} -> {Destino} (Tipo: {Tipo})",
+            origenIso3, destinoIso3, tipoNacionalidad ?? "AMBOS");
+
+        // PASO 1: Intentar URL directa
+        var directUrlResult = await IntentarScrapeoDirectoAsync(
+            origenIso3, destinoIso3, idioma, fechaBase, tabExtraccion, CancellationToken.None);
+        
+        if (directUrlResult != null && directUrlResult.IsSuccess)
+        {
+            stopwatch.Stop();
+            directUrlResult.Duration = stopwatch.Elapsed;
+            
+            _logger.LogInformation(
+                "✅ REQ-SHERPA-003: Scraping exitoso por URL directa en {Duration}ms - {Origen}->{Destino}",
+                stopwatch.ElapsedMilliseconds, origenIso3, destinoIso3);
+            
+            return directUrlResult;
+        }
+        
+        // PASO 2: Fallback a formulario
+        _logger.LogInformation(
+            "🔄 REQ-SHERPA-003: URL directa no funcionó o incompleta, procediendo con fallback a formulario...");
+        
+        try
+        {
+            var formResult = await ScrapearRequisitosAsync(
+                origenIso3, destinoIso3, idioma, fechaBase, tipoNacionalidad);
+            
+            stopwatch.Stop();
+            
+            // Convertir ResultadoScraping a ScrapingResult
+            var result = new ScrapingResult
+            {
+                DepartureHtml = formResult.HtmlRaw, // El HTML crudo contiene ambos tabs
+                ReturnHtml = null, // Se almacena en el mismo HTML
+                UsedMethod = ScrapingMethod.FormFill,
+                Duration = stopwatch.Elapsed,
+                UrlUsed = formResult.UrlConsultada,
+                ErrorMessage = formResult.MensajeError
+            };
+            
+            _logger.LogInformation(
+                "✅ REQ-SHERPA-003: Scraping exitoso por formulario en {Duration}ms - {Origen}->{Destino}",
+                stopwatch.ElapsedMilliseconds, origenIso3, destinoIso3);
+            
+            return result;
+        }
+        catch (Exception ex)
+        {
+            stopwatch.Stop();
+            
+            _logger.LogError(ex,
+                "❌ REQ-SHERPA-003: Falló tanto URL directa como formulario - {Origen}->{Destino}",
+                origenIso3, destinoIso3);
+            
+            return ScrapingResult.Failure(
+                $"Falló tanto URL directa como formulario: {ex.Message}",
+                ScrapingMethod.FormFill);
+        }
+    }
+
+    /// <summary>
+    /// Intenta realizar scraping mediante navegación directa a URL con parámetros
+    /// Retorna null si no se pudo cargar contenido válido
+    /// </summary>
+    private async Task<ScrapingResult?> IntentarScrapeoDirectoAsync(
+        string origenIso3,
+        string destinoIso3,
+        string idioma,
+        DateTime fechaBase,
+        TabExtraccion tabExtraccion,
+        CancellationToken cancellationToken)
+    {
+        var urlDirecta = _urlBuilder.BuildDirectUrl(
+            destinoIso3, origenIso3, origenIso3, idioma, fechaBase.AddDays(1), fechaBase.AddDays(8));
+        
+        _logger.LogInformation("🔗 REQ-SHERPA-003: Intentando URL directa: {Url}", urlDirecta);
+        
+        IPage? page = null;
+        
+        try
+        {
+            // Crear contexto con configuración stealth
+            var contextOptions = _stealthConfig.GetStealthContextOptions();
+            await using var context = await _browser!.NewContextAsync(contextOptions);
+            
+            // Añadir headers adicionales
+            await context.SetExtraHTTPHeadersAsync(new Dictionary<string, string>
+            {
+                ["Accept-Language"] = idioma.Replace("-", "_").Replace("EN", "en").Replace("ES", "es").Replace("PT", "pt"),
+                ["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                ["Accept-Encoding"] = "gzip, deflate, br",
+                ["DNT"] = "1",
+                ["Connection"] = "keep-alive",
+                ["Upgrade-Insecure-Requests"] = "1"
+            });
+
+            page = await context.NewPageAsync();
+
+            // Ejecutar scripts de stealth
+            foreach (var script in StealthConfig.StealthScripts)
+            {
+                try { await page.AddInitScriptAsync(script); }
+                catch { /* Ignorar errores de scripts */ }
+            }
+
+            // Navegar a URL directa con timeout corto
+            var directUrlTimeout = _configuration.GetValue<int>("Scraping:DirectUrlTimeoutMs", 15000);
+            
+            _logger.LogDebug("Navegando a URL directa (timeout: {Timeout}ms)...", directUrlTimeout);
+            
+            var response = await page.GotoAsync(urlDirecta, new PageGotoOptions
+            {
+                WaitUntil = WaitUntilState.NetworkIdle,
+                Timeout = directUrlTimeout
+            });
+            
+            if (response == null || response.Status >= 400)
+            {
+                _logger.LogWarning("⚠️ URL directa no accesible - Status: {Status}", response?.Status ?? 0);
+                return null;
+            }
+            
+            _logger.LogInformation("✅ URL directa accesible - Status: {Status}", response.Status);
+            
+            // Delay anti-detección
+            await Task.Delay(_stealthConfig.GetRandomDelayMs() / 2);
+            
+            // Verificar contenido cargado
+            var contentVerifierLogger = NullLogger<ContentVerifier>.Instance;
+            var verifier = new ContentVerifier(page, contentVerifierLogger);
+            
+            var minContentLength = _configuration.GetValue<int>("Scraping:MinContentLength", 500);
+            var verificationResult = await verifier.VerifyAsync(minContentLength, cancellationToken);
+            
+            if (!verificationResult.IsValid)
+            {
+                _logger.LogWarning(
+                    "⚠️ Contenido de URL directa no válido - Departure: {Departure}, Return: {Return}, " +
+                    "ContentLength: {ContentLength}",
+                    verificationResult.HasDepartureTab,
+                    verificationResult.HasReturnTab,
+                    verificationResult.ActiveTabContentLength);
+                
+                return null;
+            }
+            
+            _logger.LogInformation("✅ Contenido verificado - tabs presentes y contenido sustancial");
+            
+            // Extraer datos según tabExtraccion
+            var resultado = await ExtraerDatosDesdePaginaAsync(
+                page, urlDirecta, origenIso3, destinoIso3, idioma, tabExtraccion, null);
+            
+            if (!string.IsNullOrEmpty(resultado.MensajeError))
+            {
+                _logger.LogWarning("⚠️ Error extrayendo datos de URL directa: {Error}", resultado.MensajeError);
+                return null;
+            }
+            
+            if (!resultado.Exitoso)
+            {
+                _logger.LogWarning("⚠️ Extracción de URL directa no exitosa");
+                return null;
+            }
+            
+            return new ScrapingResult
+            {
+                DepartureHtml = resultado.HtmlRaw, // HTML completo de la página
+                ReturnHtml = null, // Contenido completo en un solo campo
+                UsedMethod = ScrapingMethod.DirectUrl,
+                UrlUsed = urlDirecta,
+                IsPartial = tabExtraccion != TabExtraccion.Ambos
+            };
+        }
+        catch (TimeoutException ex)
+        {
+            _logger.LogWarning(ex, "⏱️ Timeout navegando a URL directa");
+            return null;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "❌ Error inesperado en scraping directo");
+            return null;
+        }
+        finally
+        {
+            if (page != null)
+            {
+                try { await page.CloseAsync(); } catch { }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Extrae datos de una página ya cargada (ya sea por URL directa o formulario)
+    /// Versión simplificada del método existente
+    /// </summary>
+    private async Task<ResultadoScraping> ExtraerDatosDesdePaginaAsync(
+        IPage page,
+        string url,
+        string origenIso3,
+        string destinoIso3,
+        string idioma,
+        TabExtraccion tabExtraccion,
+        NetworkJsonCollector? networkCollector)
+    {
+        try
+        {
+            string? departureHtml = null;
+            string? returnHtml = null;
+
+            // Extraer Departure si es necesario
+            if (tabExtraccion == TabExtraccion.Departure || tabExtraccion == TabExtraccion.Ambos)
+            {
+                departureHtml = await ExtraerHtmlTabAsync(page, "Departure");
+                _logger.LogDebug("Departure HTML extraído: {Length} chars", departureHtml?.Length ?? 0);
+            }
+
+            // Extraer Return si es necesario
+            if (tabExtraccion == TabExtraccion.Return || tabExtraccion == TabExtraccion.Ambos)
+            {
+                // Click en tab Return
+                var returnClicked = await ClickReturnTabAsync(page);
+                if (returnClicked)
+                {
+                    await Task.Delay(1000); // Esperar carga
+                    returnHtml = await ExtraerHtmlTabAsync(page, "Return");
+                    _logger.LogDebug("Return HTML extraído: {Length} chars", returnHtml?.Length ?? 0);
+                }
+            }
+
+            // Combinar HTMLs si es necesario
+            var htmlCompleto = page.ContentAsync().Result;
+
+            return new ResultadoScraping
+            {
+                Exitoso = true,
+                UrlConsultada = url,
+                HtmlRaw = htmlCompleto,
+                TabsExtraidas = tabExtraccion.ToString()
+            };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error extrayendo datos de página");
+            return ResultadoScraping.Fallo($"Error extracción: {ex.Message}", url);
+        }
+    }
+
+    /// <summary>
+    /// Hace click en el tab Return
+    /// </summary>
+    private async Task<bool> ClickReturnTabAsync(IPage page)
+    {
+        var selectors = new[]
+        {
+            "[data-testid='return-tab']",
+            "button:has-text('Return')",
+            "button:has-text('Regreso')",
+            "[role='tab']:has-text('Return')",
+            "[role='tab']:has-text('Regreso')",
+            "button[id*='return']"
+        };
+        
+        foreach (var selector in selectors)
+        {
+            try
+            {
+                var element = await page.QuerySelectorAsync(selector);
+                if (element != null)
+                {
+                    await element.ClickAsync();
+                    _logger.LogDebug("Tab Return clickeado con selector: {Selector}", selector);
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogTrace("Error click Return con selector {Selector}: {Error}", selector, ex.Message);
+            }
+        }
+        
+        return false;
+    }
+
+    /// <summary>
+    /// Extrae el HTML de un tab específico
+    /// </summary>
+    private async Task<string?> ExtraerHtmlTabAsync(IPage page, string tabName)
+    {
+        // Intentar obtener contenido del tab activo
+        var contentSelectors = new[]
+        {
+            ".requirements-content",
+            "[data-testid='requirements-content']",
+            ".tab-content",
+            "[data-testid='tab-content']"
+        };
+        
+        foreach (var selector in contentSelectors)
+        {
+            try
+            {
+                var element = await page.QuerySelectorAsync(selector);
+                if (element != null)
+                {
+                    var html = await element.InnerHTMLAsync();
+                    if (!string.IsNullOrWhiteSpace(html))
+                    {
+                        return html;
+                    }
+                }
+            }
+            catch { /* Ignorar y probar siguiente */ }
+        }
+        
+        // Fallback: obtener todo el body
+        try
+        {
+            return await page.ContentAsync();
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    #endregion
 
     /// <summary>
     /// Clase auxiliar para representar una sección de requisitos

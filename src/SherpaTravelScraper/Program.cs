@@ -38,6 +38,9 @@ var host = Host.CreateDefaultBuilder(args)
         // Stealth
         services.AddSingleton<StealthConfig>();
         
+        // REQ-SHERPA-003: Servicio para construcción de URLs
+        services.AddSingleton<UrlBuilderService>();
+        
         // HttpClient para servicios de IA
         services.AddHttpClient();
         

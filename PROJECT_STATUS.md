@@ -1,7 +1,7 @@
 # SherpaTravelScraper_v3 - Estado
 
 - Fecha inicio: 2026-03-11
-- Estado: [DESIGN_READY] - REQ-SHERPA-003 en diseño técnico
+- Estado: [READY_FOR_TESTING] - REQ-SHERPA-003 implementado
 - Base: clon técnico de SherpaTravelScraper (hardening aplicado sin artefactos de build)
 
 ## Cambios v3 aplicados
@@ -16,14 +16,22 @@
 ## Requerimientos Activos
 
 ### REQ-SHERPA-003: Estrategia híbrida de scraping
-- **Estado:** [DESIGN_READY]
+- **Estado:** [READY_FOR_TESTING]
 - **Descripción:** Implementar flujo híbrido: intentar URL directa primero, fallback a formulario
 - **Análisis:** `docs/IMPACT_ANALYSIS_REQ003.md`
 - **Diseño:** `docs/TECH_DESIGN_REQ003.md`
-- **Entregables pendientes:**
-  - [ ] `UrlBuilderService` - Generador de URLs dinámicas
-  - [ ] `ContentVerifier` - Verificador de contenido cargado
-  - [ ] `ScrapingResult` / `ScrapingMethod` - Modelos de resultado
-  - [ ] Modificación `SherpaScraperService` - Lógica híbrida
-  - [ ] Tests unitarios e integración
-  - [ ] QA de regresión
+- **Implementación:** Completada
+
+### Entregables Implementados
+- [x] `UrlBuilderService` - Generador de URLs dinámicas
+- [x] `ContentVerifier` - Verificador de contenido cargado
+- [x] `ScrapingResult` / `ScrapingMethod` - Modelos de resultado
+- [x] Modificación `SherpaScraperService` - Lógica híbrida con método `ScrapearConEstrategiaHibridaAsync`
+- [x] Registro en `Program.cs` - UrlBuilderService agregado a DI
+- [x] Build exitoso - 0 errores
+
+### Próximos pasos
+- [ ] Tests unitarios para `UrlBuilderService`
+- [ ] Tests unitarios para `ContentVerifier`
+- [ ] Tests de integración del flujo híbrido
+- [ ] QA de regresión
