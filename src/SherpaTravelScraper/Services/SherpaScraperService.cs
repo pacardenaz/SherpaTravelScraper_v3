@@ -346,210 +346,86 @@ public class SherpaScraperService : IAsyncDisposable
         DateTime fechaBase)
     {
         _logger.LogInformation("📝 Llenando formulario de Sherpa...");
-        
+
         try
         {
-            // 1. Click en botón "Change" para abrir el formulario (si es necesario)
-            var changeButtonSelectors = new[] {
-                "button:has-text('Change')",
-                "button.summit-button--secondary",
-                "button[aria-label*='Change']"
-            };
+            // 0) Cerrar banner de cookies si aparece (no bloqueante)
+            try
+            {
+                var cookieBtn = page.Locator("button:has-text('Accept all cookies')").First;
+                if (await cookieBtn.IsVisibleAsync(new() { Timeout = 1500 }))
+                {
+                    await cookieBtn.ClickAsync(new() { Timeout = 2000 });
+                    await page.WaitForTimeoutAsync(300);
+                    _logger.LogInformation("✅ Cookies aceptadas");
+                }
+            }
+            catch { /* no-op */ }
 
-            foreach (var selector in changeButtonSelectors)
+            // 1) Abrir formulario solo si no está visible
+            var whereFrom = page.Locator("button:has-text('Where from')").First;
+            var formVisible = false;
+            try
+            {
+                formVisible = await whereFrom.IsVisibleAsync(new() { Timeout = 1200 });
+            }
+            catch { formVisible = false; }
+
+            if (!formVisible)
             {
                 try
                 {
-                    var changeBtn = await page.QuerySelectorAsync(selector);
-                    if (changeBtn != null && await changeBtn.IsVisibleAsync())
+                    var changeBtn = page.Locator("button:has-text('Change')").First;
+                    if (await changeBtn.IsVisibleAsync(new() { Timeout = 1500 }))
                     {
-                        await changeBtn.ClickAsync();
+                        await changeBtn.ClickAsync(new() { Timeout = 2000 });
+                        await page.WaitForTimeoutAsync(400);
                         _logger.LogInformation("✅ Botón 'Change' clickeado");
-                        await Task.Delay(1000);
-                        break;
                     }
                 }
-                catch { continue; }
-            }
-
-            // 2. Seleccionar país de origen (From)
-            _logger.LogInformation("🌍 Seleccionando origen: {Origen}", origenIso3);
-            
-            // Click en "Where from?"
-            var whereFromSelectors = new[] {
-                "button:has-text('Where from')",
-                "button[aria-label*='Where from']",
-                "button.w-full.h-16:first-of-type"
-            };
-
-            bool origenAbierto = false;
-            foreach (var selector in whereFromSelectors)
-            {
-                try
+                catch
                 {
-                    var whereFromBtn = await page.QuerySelectorAsync(selector);
-                    if (whereFromBtn != null && await whereFromBtn.IsVisibleAsync())
-                    {
-                        await whereFromBtn.ClickAsync();
-                        _logger.LogInformation("✅ Click en 'Where from?'");
-                        await Task.Delay(500);
-                        origenAbierto = true;
-                        break;
-                    }
-                }
-                catch { continue; }
-            }
-
-            if (origenAbierto)
-            {
-                // Escribir el nombre del país en el input de búsqueda
-                var searchInputSelectors = new[] {
-                    "input.mat-mdc-input-element",
-                    "input[placeholder*='Where are you coming from']",
-                    ".cdk-overlay-pane input"
-                };
-
-                string paisNombre = ObtenerNombrePaisDesdeIso3(origenIso3);
-                
-                foreach (var selector in searchInputSelectors)
-                {
-                    try
-                    {
-                        var searchInput = await page.QuerySelectorAsync(selector);
-                        if (searchInput != null)
-                        {
-                            await searchInput.FillAsync(paisNombre);
-                            _logger.LogInformation("✅ País escrito en búsqueda: {Pais}", paisNombre);
-                            await Task.Delay(800);
-                            break;
-                        }
-                    }
-                    catch { continue; }
-                }
-
-                // Seleccionar la opción del país
-                var optionSelectors = new[] {
-                    $".mat-mdc-list-item:has-text('{paisNombre}')",
-                    $".mat-mdc-option:has-text('{paisNombre}')",
-                    $"[role='option']:has-text('{paisNombre}')",
-                    ".mat-mdc-list-item:first-child"
-                };
-
-                foreach (var selector in optionSelectors)
-                {
-                    try
-                    {
-                        await page.ClickAsync(selector);
-                        _logger.LogInformation("✅ Origen seleccionado: {Origen}", origenIso3);
-                        await Task.Delay(500);
-                        break;
-                    }
-                    catch { continue; }
+                    _logger.LogDebug("'Change' no disponible, continuando...");
                 }
             }
 
-            // 3. Configurar fechas (si los inputs son visibles)
+            // 2) Seleccionar origen
+            var paisOrigen = ObtenerNombrePaisDesdeIso3(origenIso3);
+            await SeleccionarPaisEnCampoAsync(page, "Where from", paisOrigen);
+            _logger.LogInformation("✅ Origen seleccionado: {Origen} ({Nombre})", origenIso3, paisOrigen);
+
+            // 3) Seleccionar destino
+            var paisDestino = ObtenerNombrePaisDesdeIso3(destinoIso3);
+            await SeleccionarPaisEnCampoAsync(page, "Where to", paisDestino);
+            _logger.LogInformation("✅ Destino seleccionado: {Destino} ({Nombre})", destinoIso3, paisDestino);
+
+            // 4) Fechas
             var departureDate = fechaBase.AddDays(15).ToString("yyyy-MM-dd");
             var returnDate = fechaBase.AddDays(22).ToString("yyyy-MM-dd");
 
-            var departureSelectors = new[] {
-                "input[placeholder='Departure']",
-                "input[aria-label*='Departure']",
-                "input[type='date']:first-of-type"
-            };
-
-            foreach (var selector in departureSelectors)
+            try
             {
-                try
+                var depInput = page.Locator("input[placeholder='Departure'], input[aria-label*='Departure']").First;
+                if (await depInput.IsVisibleAsync(new() { Timeout = 1500 }))
                 {
-                    var departureInput = await page.QuerySelectorAsync(selector);
-                    if (departureInput != null && await departureInput.IsVisibleAsync())
-                    {
-                        await departureInput.FillAsync(departureDate);
-                        _logger.LogInformation("✅ Fecha salida: {Fecha}", departureDate);
-                        await Task.Delay(300);
-                        break;
-                    }
+                    await depInput.FillAsync(departureDate, new() { Timeout = 2000 });
+                    _logger.LogInformation("✅ Fecha salida: {Fecha}", departureDate);
                 }
-                catch { continue; }
             }
+            catch { /* opcional */ }
 
-            var returnSelectors = new[] {
-                "input[placeholder='Return']",
-                "input[aria-label*='Return']",
-                "input[type='date']:nth-of-type(2)"
-            };
-
-            foreach (var selector in returnSelectors)
+            try
             {
-                try
+                var retInput = page.Locator("input[placeholder='Return'], input[aria-label*='Return']").First;
+                if (await retInput.IsVisibleAsync(new() { Timeout = 1500 }))
                 {
-                    var returnInput = await page.QuerySelectorAsync(selector);
-                    if (returnInput != null && await returnInput.IsVisibleAsync())
-                    {
-                        await returnInput.FillAsync(returnDate);
-                        _logger.LogInformation("✅ Fecha retorno: {Fecha}", returnDate);
-                        await Task.Delay(300);
-                        break;
-                    }
+                    await retInput.FillAsync(returnDate, new() { Timeout = 2000 });
+                    _logger.LogInformation("✅ Fecha retorno: {Fecha}", returnDate);
                 }
-                catch { continue; }
             }
+            catch { /* opcional */ }
 
-            // 4. Seleccionar tipo de viaje "Round Trip" (si es necesario)
-            var tripTypeSelectors = new[] {
-                "button:has-text('Round Trip')",
-                "mat-select:has-text('Round Trip')",
-                "[aria-label*='Round Trip']"
-            };
-
-            foreach (var selector in tripTypeSelectors)
-            {
-                try
-                {
-                    var tripTypeEl = await page.QuerySelectorAsync(selector);
-                    if (tripTypeEl != null && await tripTypeEl.IsVisibleAsync())
-                    {
-                        // Verificar si ya está seleccionado
-                        var text = await tripTypeEl.TextContentAsync();
-                        if (text?.Contains("Round Trip") == true)
-                        {
-                            _logger.LogInformation("✅ Tipo de viaje ya es Round Trip");
-                            break;
-                        }
-                        
-                        await tripTypeEl.ClickAsync();
-                        await Task.Delay(300);
-                        await page.ClickAsync("mat-option:has-text('Round Trip'), .mat-mdc-option:has-text('Round Trip')");
-                        _logger.LogInformation("✅ Tipo de viaje seleccionado: Round Trip");
-                        await Task.Delay(300);
-                        break;
-                    }
-                }
-                catch { continue; }
-            }
-
-            // 5. Seleccionar propósito "Tourism" (si es necesario)
-            var purposeSelectors = new[] {
-                "button:has-text('Tourism')",
-                "button.summit-tag--selected:has-text('Tourism')",
-                "mat-select:has-text('Tourism')"
-            };
-
-            foreach (var selector in purposeSelectors)
-            {
-                try
-                {
-                    var purposeEl = await page.QuerySelectorAsync(selector);
-                    if (purposeEl != null && await purposeEl.IsVisibleAsync())
-                    {
-                        _logger.LogInformation("✅ Propósito Tourism ya seleccionado");
-                        break;
-                    }
-                }
-                catch { continue; }
-            }
-
+            // 5) Verificar propósito/tipo viaje (opcional, no bloqueante)
             _logger.LogInformation("✅ Formulario llenado correctamente");
         }
         catch (Exception ex)
@@ -557,6 +433,49 @@ public class SherpaScraperService : IAsyncDisposable
             _logger.LogError(ex, "❌ Error llenando formulario");
             // No lanzar excepción, intentar continuar
         }
+    }
+
+    private async Task SeleccionarPaisEnCampoAsync(IPage page, string fieldLabel, string countryName)
+    {
+        // Abrir selector
+        var btn = page.Locator($"button:has-text('{fieldLabel}')").First;
+        await btn.ClickAsync(new() { Timeout = 4000 });
+        await page.WaitForTimeoutAsync(300);
+
+        // Buscar input activo de overlay
+        var input = page.Locator(".cdk-overlay-pane input, input.mat-mdc-input-element, input[placeholder*='Search']").First;
+        await input.FillAsync(countryName, new() { Timeout = 3000 });
+        await page.WaitForTimeoutAsync(350);
+
+        // Seleccionar opción (intentos)
+        var options = new[]
+        {
+            $"[role='option']:has-text('{countryName}')",
+            $".mat-mdc-option:has-text('{countryName}')",
+            $".mat-mdc-list-item:has-text('{countryName}')",
+            ".mat-mdc-option:first-child",
+            ".mat-mdc-list-item:first-child"
+        };
+
+        foreach (var selector in options)
+        {
+            try
+            {
+                var opt = page.Locator(selector).First;
+                if (await opt.IsVisibleAsync(new() { Timeout = 1200 }))
+                {
+                    await opt.ClickAsync(new() { Timeout = 2000 });
+                    await page.WaitForTimeoutAsync(300);
+                    return;
+                }
+            }
+            catch { }
+        }
+
+        // fallback teclado
+        await page.Keyboard.PressAsync("ArrowDown");
+        await page.Keyboard.PressAsync("Enter");
+        await page.WaitForTimeoutAsync(300);
     }
 
     /// <summary>
