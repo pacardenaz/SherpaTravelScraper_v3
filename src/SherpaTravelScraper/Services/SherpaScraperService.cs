@@ -1598,11 +1598,35 @@ public class SherpaScraperService : IAsyncDisposable
                 returnJson = collector.GetLatestPayload(TabExtraccion.Return);
                 if (!string.IsNullOrWhiteSpace(returnJson))
                 {
-                    _logger.LogInformation("📡 JSON Return capturado: {Size} chars en {Elapsed}ms", 
+                    _logger.LogInformation("📡 JSON Return capturado via collector: {Size} chars en {Elapsed}ms", 
                         returnJson.Length, (DateTime.UtcNow - startTime).TotalMilliseconds);
                     break;
                 }
                 await Task.Delay(500);
+            }
+            
+            // Si no se capturó via collector, intentar extraer del state de Angular o hacer petición directa
+            if (string.IsNullOrWhiteSpace(returnJson))
+            {
+                _logger.LogDebug("🔄 Intentando extraer JSON Return del state de Angular...");
+                returnJson = await ExtraerJsonDeAngularStateAsync(page, "Return");
+                
+                if (!string.IsNullOrWhiteSpace(returnJson))
+                {
+                    _logger.LogInformation("📡 JSON Return extraído del state de Angular: {Size} chars", returnJson.Length);
+                }
+            }
+            
+            // Si aún no se tiene, intentar petición HTTP directa
+            if (string.IsNullOrWhiteSpace(returnJson))
+            {
+                _logger.LogDebug("🔄 Intentando obtener JSON Return via HTTP request...");
+                returnJson = await ObtenerJsonViaHttpRequestAsync(page, origen, destino, idioma);
+                
+                if (!string.IsNullOrWhiteSpace(returnJson))
+                {
+                    _logger.LogInformation("📡 JSON Return obtenido via HTTP directo: {Size} chars", returnJson.Length);
+                }
             }
             
             if (string.IsNullOrWhiteSpace(returnJson))
@@ -1673,6 +1697,102 @@ public class SherpaScraperService : IAsyncDisposable
             pasaportes: modelo.Departure?.Pasaporte?.Notas ?? modelo.Return?.Pasaporte?.Notas,
             sanitarios: modelo.Departure?.Salud?.Notas ?? modelo.Return?.Salud?.Notas,
             tabsExtraidas: tabExtraccion.ToString());
+    }
+
+    /// <summary>
+    /// Intenta extraer el JSON de requisitos del state de Angular o variables globales
+    /// </summary>
+    private async Task<string?> ExtraerJsonDeAngularStateAsync(IPage page, string segmento)
+    {
+        try
+        {
+            // Intentar obtener de window.__DATA__ o variables similares
+            var jsonFromWindow = await page.EvaluateAsync<string?>("""
+                () => {
+                    // Buscar en variables globales comunes de Angular
+                    if (window.__DATA__ && window.__DATA__.trips) {
+                        return JSON.stringify(window.__DATA__.trips);
+                    }
+                    if (window.__INITIAL_STATE__ && window.__INITIAL_STATE__.trips) {
+                        return JSON.stringify(window.__INITIAL_STATE__.trips);
+                    }
+                    if (window.SHERPA_DATA && window.SHERPA_DATA.trips) {
+                        return JSON.stringify(window.SHERPA_DATA.trips);
+                    }
+                    // Buscar en localStorage
+                    const localData = localStorage.getItem('sherpa-trips-data');
+                    if (localData) return localData;
+                    // Buscar en sessionStorage
+                    const sessionData = sessionStorage.getItem('sherpa-trips-data');
+                    if (sessionData) return sessionData;
+                    return null;
+                }
+                """);
+            
+            if (!string.IsNullOrWhiteSpace(jsonFromWindow))
+            {
+                // Validar que es JSON válido
+                JsonDocument.Parse(jsonFromWindow);
+                return jsonFromWindow;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogTrace("No se pudo extraer JSON del state de Angular: {Error}", ex.Message);
+        }
+        
+        return null;
+    }
+
+    /// <summary>
+    /// Hace una petición HTTP directa a la API de Sherpa para obtener los datos del Return
+    /// </summary>
+    private async Task<string?> ObtenerJsonViaHttpRequestAsync(IPage page, string origen, string destino, string idioma)
+    {
+        try
+        {
+            _logger.LogDebug("🌐 Haciendo petición HTTP directa a API para Return...");
+            
+            // Construir URL de la API con parámetros invertidos (destino -> origen)
+            var apiUrl = $"https://requirements-api.joinsherpa.com/v2/trips?include=restriction,procedure&language={idioma}&nationality={destino}&origin={origen}&destination={destino}";
+            
+            // Usar fetch desde el navegador para mantener cookies/headers
+            var jsonResult = await page.EvaluateAsync<string?>("""
+                async (url) => {
+                    try {
+                        const response = await fetch(url, {
+                            method: 'GET',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            credentials: 'include'
+                        });
+                        if (response.ok) {
+                            return await response.text();
+                        }
+                        return null;
+                    } catch (e) {
+                        console.error('Error en fetch:', e);
+                        return null;
+                    }
+                }
+                """, apiUrl);
+            
+            if (!string.IsNullOrWhiteSpace(jsonResult))
+            {
+                // Validar que es JSON válido
+                JsonDocument.Parse(jsonResult);
+                _logger.LogInformation("📡 JSON Return obtenido via HTTP directo: {Size} chars", jsonResult.Length);
+                return jsonResult;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogTrace("Error en petición HTTP directa: {Error}", ex.Message);
+        }
+        
+        return null;
     }
 
     private async Task<ResultadoScraping> ExtraerFallbackExistenteAsync(
