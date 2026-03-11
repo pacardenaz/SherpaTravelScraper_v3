@@ -1580,66 +1580,34 @@ public class SherpaScraperService : IAsyncDisposable
             // Cambiar a segmento Return ANTES de hacer click
             collector.SetSegment(TabExtraccion.Return);
             
-            // Hacer click en el tab Return y esperar la respuesta de la API
-            _logger.LogInformation("🖱️ Haciendo click en tab Return y esperando respuesta de API...");
+            _logger.LogInformation("🖱️ Haciendo click en tab Return...");
             
-            try
-            {
-                // Configurar captura de respuesta ANTES de hacer click
-                var responseTask = page.WaitForResponseAsync(
-                    resp => {
-                        var url = resp.Url.ToLowerInvariant();
-                        var matches = url.Contains("requirements-api") && 
-                                     url.Contains("trips") && 
-                                     url.Contains("restriction");
-                        if (matches)
-                        {
-                            _logger.LogDebug("🌐 Respuesta detectada: {Url}", resp.Url);
-                        }
-                        return matches;
-                    },
-                    new PageWaitForResponseOptions { Timeout = 15000 });
-                
-                // Hacer click en el tab Return PRIMERO
-                await ActivarTabAsync(page, "Return");
-                
-                // Dar tiempo para que inicie la petición
-                await Task.Delay(500);
-                
-                // Esperar la respuesta
-                _logger.LogDebug("⏳ Esperando respuesta de API Return (timeout 15s)...");
-                var response = await responseTask;
-                
-                if (response != null && response.Status == 200)
-                {
-                    returnJson = await response.TextAsync();
-                    _logger.LogInformation("📡 JSON Return capturado: {Size} chars", returnJson?.Length ?? 0);
-                }
-                else if (response != null)
-                {
-                    _logger.LogWarning("⚠️ Respuesta Return con status: {Status}", response.Status);
-                }
-            }
-            catch (TimeoutException)
-            {
-                _logger.LogWarning("⚠️ Timeout esperando respuesta de Return");
-            }
+            // Hacer click en el tab Return
+            await ActivarTabAsync(page, "Return");
             
-            // Fallback: intentar obtener del collector si WaitForResponse falló
-            if (string.IsNullOrWhiteSpace(returnJson))
+            // Esperar a que se complete la petición AJAX
+            _logger.LogDebug("⏳ Esperando que llegue respuesta de API Return...");
+            
+            // Esperar primero un tiempo fijo para que inicie la petición
+            await Task.Delay(1000);
+            
+            // Luego esperar activamente hasta 10 segundos
+            var startTime = DateTime.UtcNow;
+            while ((DateTime.UtcNow - startTime).TotalMilliseconds < 10000)
             {
-                _logger.LogDebug("🔄 Fallback: intentando obtener JSON Return del collector...");
-                returnJson = await EsperarJsonConTimeoutAsync(collector, TabExtraccion.Return, timeoutMs: 5000);
-                
+                returnJson = collector.GetLatestPayload(TabExtraccion.Return);
                 if (!string.IsNullOrWhiteSpace(returnJson))
                 {
-                    _logger.LogInformation("📡 JSON Return capturado via collector: {Size} chars", returnJson.Length);
+                    _logger.LogInformation("📡 JSON Return capturado: {Size} chars en {Elapsed}ms", 
+                        returnJson.Length, (DateTime.UtcNow - startTime).TotalMilliseconds);
+                    break;
                 }
+                await Task.Delay(500);
             }
             
             if (string.IsNullOrWhiteSpace(returnJson))
             {
-                _logger.LogWarning("⚠️ No se pudo capturar JSON de Return por ningún método");
+                _logger.LogWarning("⚠️ Timeout: No se pudo capturar JSON de Return después de 10s");
             }
         }
 
