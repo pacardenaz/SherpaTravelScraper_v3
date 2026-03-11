@@ -1580,12 +1580,41 @@ public class SherpaScraperService : IAsyncDisposable
             // Cambiar a segmento Return ANTES de hacer click
             collector.SetSegment(TabExtraccion.Return);
             
-            // Hacer click en el tab Return
-            await ActivarTabAsync(page, "Return");
+            // Hacer click en el tab Return y esperar la respuesta de la API
+            _logger.LogInformation("🖱️ Haciendo click en tab Return y esperando respuesta de API...");
             
-            // Esperar a que llegue el JSON de Return (con timeout más largo porque requiere nueva llamada API)
-            returnJson = await EsperarJsonConTimeoutAsync(collector, TabExtraccion.Return, timeoutMs: 8000);
-            _logger.LogDebug("JSON Return capturado: {Size} chars", returnJson?.Length ?? 0);
+            try
+            {
+                // Usar WaitForResponseAsync para capturar explícitamente la respuesta después del click
+                var responseTask = page.WaitForResponseAsync(
+                    resp => resp.Url.Contains("requirements-api.joinsherpa.com") && 
+                            resp.Url.Contains("/trips") && 
+                            resp.Url.Contains("include=restriction,procedure"),
+                    new PageWaitForResponseOptions { Timeout = 10000 });
+                
+                // Hacer click en el tab Return
+                await ActivarTabAsync(page, "Return");
+                
+                // Esperar la respuesta
+                var response = await responseTask;
+                
+                if (response != null && response.Status == 200)
+                {
+                    returnJson = await response.TextAsync();
+                    _logger.LogInformation("📡 JSON Return capturado via WaitForResponse: {Size} chars", returnJson?.Length ?? 0);
+                }
+            }
+            catch (TimeoutException)
+            {
+                _logger.LogWarning("⚠️ Timeout esperando respuesta de Return, intentando con collector...");
+                // Fallback: intentar obtener del collector
+                returnJson = await EsperarJsonConTimeoutAsync(collector, TabExtraccion.Return, timeoutMs: 3000);
+            }
+            
+            if (string.IsNullOrWhiteSpace(returnJson))
+            {
+                _logger.LogWarning("⚠️ No se pudo capturar JSON de Return");
+            }
         }
 
         // Validar que tenemos los JSON necesarios
