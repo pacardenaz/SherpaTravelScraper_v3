@@ -205,48 +205,13 @@ public class SherpaScraperService : IAsyncDisposable
             // PASO 3: Llenar formulario
             await LlenarFormularioSherpaAsync(page, origenIso3, destinoIso3, idioma, fechaBase);
 
-            // PASO 4: Click en "See Requirements"
+            // PASO 4: Click robusto en submit (See requirements)
             _logger.LogInformation("🖱️ Click en 'See Requirements'...");
-            var botonSelectores = new[] {
-                "button:has-text('See requirements')",
-                "button:has-text('See Requirements')",
-                "button.w-full.large",
-                "button[type='submit']",
-                "button:has-text('Check')",
-                "button:has-text('Submit')"
-            };
-
-            bool botonClickeado = false;
-            foreach (var selector in botonSelectores)
-            {
-                try
-                {
-                    var elemento = await page.QuerySelectorAsync(selector);
-                    if (elemento != null)
-                    {
-                        var isEnabled = await elemento.IsEnabledAsync();
-                        if (isEnabled)
-                        {
-                            await elemento.ClickAsync();
-                            _logger.LogInformation("✅ Botón clickeado: {Selector}", selector);
-                            botonClickeado = true;
-                            break;
-                        }
-                        else
-                        {
-                            _logger.LogWarning("⚠️ Botón encontrado pero deshabilitado: {Selector}", selector);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogDebug("No se pudo hacer click con selector {Selector}: {Error}", selector, ex.Message);
-                }
-            }
+            var botonClickeado = await ClickSubmitRobustoAsync(page);
 
             if (!botonClickeado)
             {
-                _logger.LogWarning("⚠️ No se encontró botón de submit habilitado, intentando Enter en formulario");
+                _logger.LogWarning("⚠️ Submit no clickeable; enviando Enter como fallback");
                 await page.Keyboard.PressAsync("Enter");
             }
 
@@ -539,6 +504,70 @@ public class SherpaScraperService : IAsyncDisposable
         {
             _logger.LogWarning(ex, "⚠️ Falló selección de país {Country} en campo {Field}", countryName, fieldLabel);
         }
+    }
+
+
+    private async Task<bool> ClickSubmitRobustoAsync(IPage page)
+    {
+        // Ordenado por confiabilidad observada en Sherpa
+        var submitLocators = new[]
+        {
+            page.GetByRole(AriaRole.Button, new() { Name = "See requirements" }).First,
+            page.GetByRole(AriaRole.Button, new() { Name = "See Requirements" }).First,
+            page.Locator("button:has-text('See requirements')").First,
+            page.Locator("button:has-text('See Requirements')").First,
+            page.Locator("button[type='submit']").First,
+            page.Locator("button.w-full.large").First
+        };
+
+        foreach (var loc in submitLocators)
+        {
+            try
+            {
+                // visible + habilitado
+                if (!await loc.IsVisibleAsync())
+                    continue;
+
+                if (!await loc.IsEnabledAsync())
+                {
+                    _logger.LogDebug("Submit visible pero deshabilitado; esperando 500ms...");
+                    await page.WaitForTimeoutAsync(500);
+                    if (!await loc.IsEnabledAsync())
+                        continue;
+                }
+
+                await loc.ScrollIntoViewIfNeededAsync();
+                await loc.ClickAsync(new() { Timeout = 2500 });
+                _logger.LogInformation("✅ Submit clickeado");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogDebug("Intento submit falló: {Error}", ex.Message);
+            }
+        }
+
+        // Último recurso: JS click sobre cualquier botón candidate visible
+        var jsClicked = await page.EvaluateAsync<bool>(@"
+            () => {
+              const candidates = Array.from(document.querySelectorAll('button'));
+              const btn = candidates.find(b => {
+                const t = (b.innerText || b.textContent || '').toLowerCase();
+                return (t.includes('see requirements') || t.includes('see requirement')) && !b.disabled;
+              });
+              if (!btn) return false;
+              btn.click();
+              return true;
+            }
+        ");
+
+        if (jsClicked)
+        {
+            _logger.LogInformation("✅ Submit clickeado vía JS fallback");
+            return true;
+        }
+
+        return false;
     }
 
 
