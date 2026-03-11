@@ -51,7 +51,7 @@ var host = Host.CreateDefaultBuilder(args)
     .Build();
 
 // Ejecutar
-using var scope = host.Services.CreateScope();
+await using var scope = host.Services.CreateAsyncScope();
 var orchestrator = scope.ServiceProvider.GetRequiredService<TravelScrapingOrchestrator>();
 
 using var cts = new CancellationTokenSource();
@@ -78,10 +78,4 @@ catch (Exception ex)
     Console.WriteLine($"\n❌ Error: {ex.Message}");
     Console.WriteLine(ex.StackTrace);
     return 1;
-}
-finally
-{
-    var scraper = scope.ServiceProvider.GetService<SherpaScraperService>();
-    if (scraper != null)
-        await scraper.DisposeAsync();
 }
