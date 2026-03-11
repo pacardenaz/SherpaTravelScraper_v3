@@ -346,8 +346,12 @@ public class SherpaScraperService : IAsyncDisposable
                 }
             }
 
-            // 2) Seleccionar origen
+            // 2) Seleccionar passport (por ahora = origen)
             var paisOrigen = ObtenerNombrePaisDesdeIso3(origenIso3);
+            await SeleccionarPaisEnCampoAsync(page, "Your Passport", paisOrigen);
+            _logger.LogInformation("✅ Passport seleccionado: {Passport} ({Nombre})", origenIso3, paisOrigen);
+
+            // 3) Seleccionar origen
             await SeleccionarPaisEnCampoAsync(page, "Where from", paisOrigen);
             _logger.LogInformation("✅ Origen seleccionado: {Origen} ({Nombre})", origenIso3, paisOrigen);
 
@@ -420,9 +424,38 @@ public class SherpaScraperService : IAsyncDisposable
             var opened = false;
             try
             {
-                var btn = page.Locator($"button:has-text('{fieldLabel}')").First;
-                await btn.ClickAsync(new() { Timeout = 2500 });
-                opened = true;
+                if (fieldLabel.Equals("Your Passport", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Sherpa suele renderizar Passport como primer combobox/button del formulario
+                    var passportSelectors = new[]
+                    {
+                        "[role='combobox']",
+                        "button[aria-haspopup='listbox']",
+                        "button:has-text('(USA)')",
+                        "button:has-text('(COL)')"
+                    };
+
+                    foreach (var ps in passportSelectors)
+                    {
+                        try
+                        {
+                            var loc = page.Locator(ps).First;
+                            if (await loc.IsVisibleAsync(new() { Timeout = 1200 }))
+                            {
+                                await loc.ClickAsync(new() { Timeout = 2500 });
+                                opened = true;
+                                break;
+                            }
+                        }
+                        catch { }
+                    }
+                }
+                else
+                {
+                    var btn = page.Locator($"button:has-text('{fieldLabel}')").First;
+                    await btn.ClickAsync(new() { Timeout = 2500 });
+                    opened = true;
+                }
             }
             catch
             {
