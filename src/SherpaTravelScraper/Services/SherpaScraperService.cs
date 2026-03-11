@@ -1575,7 +1575,7 @@ public class SherpaScraperService : IAsyncDisposable
             tabs = tabExtraccion.ToString()
         };
 
-        // JSON #2 (crudo): payload original capturado de red
+        // JSON #2 (crudo): payload original capturado de red (embebido como JSON, no string escapado)
         var rawPayload = new
         {
             metodoExtraccion = "network-json",
@@ -1583,8 +1583,8 @@ public class SherpaScraperService : IAsyncDisposable
             tabs = tabExtraccion.ToString(),
             raw = new
             {
-                departure = departureJson,
-                @return = returnJson
+                departure = ParseRawJsonForStorage(departureJson),
+                @return = ParseRawJsonForStorage(returnJson)
             }
         };
 
@@ -1642,6 +1642,23 @@ public class SherpaScraperService : IAsyncDisposable
         }
 
         return await ExtraerDatosTradicionalesAsync(page, htmlRaw, url);
+    }
+
+    private static object? ParseRawJsonForStorage(string? raw)
+    {
+        if (string.IsNullOrWhiteSpace(raw))
+            return null;
+
+        try
+        {
+            // Si viene JSON válido, devolverlo como objeto para serialización anidada limpia
+            return JsonSerializer.Deserialize<object>(raw);
+        }
+        catch
+        {
+            // Si no parsea, guardar el texto original
+            return raw;
+        }
     }
 
     private RequisitosViajeCompleto MapearNetworkJsonARequisitos(
