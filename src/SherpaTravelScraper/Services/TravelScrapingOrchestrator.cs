@@ -170,8 +170,8 @@ public class TravelScrapingOrchestrator
         {
             // Marcar como en proceso
             await _repository.MarcarEnProcesoAsync(combinacion.Id);
-            _logger.LogDebug("Procesando: {Origen} -> {Destino} ({Idioma})", 
-                combinacion.Origen, combinacion.Destino, combinacion.Idioma);
+            _logger.LogDebug("Procesando: {Origen} -> {Destino} ({Idioma}) tipo={TipoNacionalidad}", 
+                combinacion.Origen, combinacion.Destino, combinacion.Idioma, combinacion.TipoNacionalidad);
 
             // Realizar scraping
             var fechaBase = DateTime.Now;

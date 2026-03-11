@@ -792,7 +792,8 @@ public class SherpaScraperService : IAsyncDisposable
         if (extractionMethod == "javascript" || extractionMethod == "js")
         {
             _logger.LogInformation("Usando extracción JavaScript tradicional...");
-            return await ExtraerDatosTradicionalesAsync(page, htmlRaw, url);
+            var tradicional = await ExtraerDatosTradicionalesAsync(page, htmlRaw, url, tabExtraccion);
+            return AplicarScopePorTab(tradicional, tabExtraccion);
         }
 
         // ESTRATEGIA 2 y 3: IA (visión o HTML)
@@ -838,13 +839,15 @@ public class SherpaScraperService : IAsyncDisposable
                     _logger.LogInformation("✅ Extracción IA exitosa - Método: {Metodo}, JSON: {JsonLength} chars, Confianza: {Confianza:F2}", 
                         extractionMethod, jsonDatos.Length, extraccion.Confianza);
                     
-                    return ResultadoScraping.Exito(
+                    var resultadoIa = ResultadoScraping.Exito(
                         datos: jsonDatos,
                         url: url,
                         htmlRaw: htmlRaw,
                         markdown: extraccion.Markdown,
                         tabsExtraidas: tabExtraccion.ToString()
                     );
+
+                    return AplicarScopePorTab(resultadoIa, tabExtraccion);
                 }
 
                 _logger.LogWarning("⚠️ IA devolvió resultado vacío, usando fallback tradicional...");
@@ -857,7 +860,8 @@ public class SherpaScraperService : IAsyncDisposable
 
         // FALLBACK: Métodos tradicionales
         _logger.LogInformation("Usando extracción tradicional (fallback)...");
-        return await ExtraerDatosTradicionalesAsync(page, htmlRaw, url);
+        var fallback = await ExtraerDatosTradicionalesAsync(page, htmlRaw, url, tabExtraccion);
+        return AplicarScopePorTab(fallback, tabExtraccion);
     }
 
     /// <summary>
@@ -889,8 +893,13 @@ public class SherpaScraperService : IAsyncDisposable
             idioma);
     }
 
-    private async Task<ResultadoScraping> ExtraerDatosTradicionalesAsync(IPage page, string htmlRaw, string url)
+    private async Task<ResultadoScraping> ExtraerDatosTradicionalesAsync(IPage page, string htmlRaw, string url, TabExtraccion tabExtraccion)
     {
+        if (tabExtraccion == TabExtraccion.Departure)
+            await ActivarTabAsync(page, "Departure");
+        else if (tabExtraccion == TabExtraccion.Return)
+            await ActivarTabAsync(page, "Return");
+
         // Estrategia mejorada: Extraer datos estructurados usando JavaScript
         var datosEstructurados = await ExtraerDatosEstructuradosConJSAsync(page, url);
         
@@ -1427,6 +1436,51 @@ public class SherpaScraperService : IAsyncDisposable
         {
             _logger.LogError(ex, "Error durante diagnóstico de página");
         }
+    }
+
+    private ResultadoScraping AplicarScopePorTab(ResultadoScraping resultado, TabExtraccion tabExtraccion)
+    {
+        resultado.TabsExtraidas = tabExtraccion.ToString();
+
+        if (tabExtraccion == TabExtraccion.Return)
+        {
+            // Estas columnas representan los requisitos del viaje principal (Departure).
+            // Para DESTINO (Return-only) deben persistirse como NULL.
+            resultado.RequisitosDestino = null;
+            resultado.RequisitosVisado = null;
+            resultado.PasaportesDocumentos = null;
+            resultado.Sanitarios = null;
+        }
+
+        if (string.IsNullOrWhiteSpace(resultado.Datos) || tabExtraccion == TabExtraccion.Ambos)
+            return resultado;
+
+        try
+        {
+            var requisitos = JsonSerializer.Deserialize<RequisitosViajeCompleto>(
+                resultado.Datos,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (requisitos == null)
+                return resultado;
+
+            if (tabExtraccion == TabExtraccion.Departure)
+                requisitos.Return = null!;
+            else if (tabExtraccion == TabExtraccion.Return)
+                requisitos.Departure = null!;
+
+            resultado.Datos = JsonSerializer.Serialize(requisitos, new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogDebug(ex, "No se pudo aplicar scope por tab al JSON de salida");
+        }
+
+        return resultado;
     }
 
     private TabExtraccion ResolverTabExtraccion(string? tipoNacionalidad)
