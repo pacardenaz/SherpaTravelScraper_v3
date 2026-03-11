@@ -74,13 +74,7 @@ public class ContentVerifier
         {
             _logger.LogDebug("Iniciando verificación de contenido...");
             
-            // Check 1: Verificar si los tabs están presentes
-            result.HasDepartureTab = await IsAnyElementVisibleAsync(DepartureTabSelectors);
-            
-            _logger.LogDebug("Tab presente - Departure: {HasDeparture}", 
-                result.HasDepartureTab);
-            
-            // Check 2: Obtener contenido del tab activo
+            // Check 1: Obtener contenido del tab activo
             var activeTabContent = await GetActiveTabContentAsync();
             result.ActiveTabContentLength = activeTabContent?.Length ?? 0;
             result.HasSubstantialContent = result.ActiveTabContentLength >= minContentLength;
@@ -88,7 +82,7 @@ public class ContentVerifier
             _logger.LogDebug("Longitud de contenido activo: {Length} chars (mínimo requerido: {Min})",
                 result.ActiveTabContentLength, minContentLength);
             
-            // Check 3: Verificar si hay contenido relevante (keywords)
+            // Check 2: Verificar si hay contenido relevante (keywords)
             if (!string.IsNullOrEmpty(activeTabContent))
             {
                 var contentLower = activeTabContent.ToLowerInvariant();
@@ -96,17 +90,15 @@ public class ContentVerifier
                     contentLower.Contains(kw.ToLowerInvariant()));
             }
             
-            // Check 4: Verificar secciones específicas
+            // Check 3: Verificar secciones específicas
             result.HasVisaSection = await ContainsKeywordsAsync(new[] { "visa", "visado" });
             result.HasPassportSection = await ContainsKeywordsAsync(new[] { "passport", "pasaporte" });
             
             // Determinar éxito general
             // Consideramos exitoso si:
-            // - El tab Departure está presente
             // - El contenido es sustancial
             // - Hay keywords válidas
-            result.IsValid = result.HasDepartureTab 
-                          && result.HasSubstantialContent
+            result.IsValid = result.HasSubstantialContent
                           && result.HasValidContentKeywords;
             
             stopwatch.Stop();
@@ -114,10 +106,9 @@ public class ContentVerifier
             
             _logger.LogInformation(
                 "Verificación completada en {Duration}ms - Válido: {IsValid}, " +
-                "Departure: {Departure}, Content: {ContentLength} chars",
+                "Content: {ContentLength} chars",
                 result.VerificationDurationMs,
                 result.IsValid,
-                result.HasDepartureTab,
                 result.ActiveTabContentLength);
             
             return result;
