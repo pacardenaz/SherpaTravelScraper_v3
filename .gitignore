@@ -1,0 +1,24 @@
+# Build results
+**/bin/
+**/obj/
+*.dll
+*.exe
+*.pdb
+
+# Debug files
+debug_*.html
+debug_*.png
+src/SherpaTravelScraper/debug_*.html
+src/SherpaTravelScraper/debug_*.png
+*.bak.*
+*.backup
+.env.backup
+
+# IDE
+.vs/
+**/.vs/
+.vscode/
+*.user
+
+# Temp
+*.tmp
