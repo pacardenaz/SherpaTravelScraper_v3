@@ -104,6 +104,7 @@ public class AiExtractionService
             return _extractionMethod switch
             {
                 "javascript" or "js" => await ExtraerConJavaScriptAsync(htmlContent, screenshotsBytes, origen, destino, idioma, ct),
+                "network-json" => await ExtraerConJavaScriptAsync(htmlContent, screenshotsBytes, origen, destino, idioma, ct),
                 "ia-vision" or "vision" => await ExtraerConIaVisionAsync(htmlContent, screenshotsBytes, origen, destino, idioma, ct),
                 "ia-html" or "html" => await ExtraerConIaHtmlAsync(htmlContent, origen, destino, idioma, ct),
                 _ => throw new NotSupportedException($"Método de extracción no soportado: {_extractionMethod}")

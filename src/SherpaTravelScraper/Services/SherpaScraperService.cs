@@ -1,6 +1,7 @@
 using System.Text.Json;
 using SherpaTravelScraper.Models;
 using System.Text.RegularExpressions;
+using System.Collections.Concurrent;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
@@ -172,6 +173,10 @@ public class SherpaScraperService : IAsyncDisposable
 
             page = await context.NewPageAsync();
 
+            var networkCollector = new NetworkJsonCollector(_logger);
+            page.Response += networkCollector.OnResponseAsync;
+            networkCollector.SetSegment(TabExtraccion.Departure);
+
             // Ejecutar scripts de stealth
             foreach (var script in StealthConfig.StealthScripts)
             {
@@ -239,7 +244,7 @@ public class SherpaScraperService : IAsyncDisposable
             var htmlRaw = await page.ContentAsync();
 
             // Intentar extraer datos
-            var resultado = await ExtraerDatosAsync(page, htmlRaw, urlBase, origenIso3, destinoIso3, idioma, tabExtraccion);
+            var resultado = await ExtraerDatosAsync(page, htmlRaw, urlBase, origenIso3, destinoIso3, idioma, tabExtraccion, networkCollector);
             
             // Delay post-request
             await Task.Delay(_stealthConfig.GetRandomDelayMs());
@@ -794,11 +799,22 @@ public class SherpaScraperService : IAsyncDisposable
     /// <summary>
     /// Extrae datos usando el método configurado (javascript, ia-vision, ia-html)
     /// </summary>
-    private async Task<ResultadoScraping> ExtraerDatosAsync(IPage page, string htmlRaw, string url, string origen, string destino, string idioma, TabExtraccion tabExtraccion)
+    private async Task<ResultadoScraping> ExtraerDatosAsync(IPage page, string htmlRaw, string url, string origen, string destino, string idioma, TabExtraccion tabExtraccion, NetworkJsonCollector networkCollector)
     {
-        // Obtener el método de extracción configurado
         var extractionMethod = _aiService?.GetExtractionMethod() ?? "javascript";
         _logger.LogInformation("Método de extracción configurado: {Metodo}", extractionMethod);
+
+        if (extractionMethod == "network-json")
+        {
+            var networkResult = await ExtraerDatosNetworkJsonAsync(page, url, origen, destino, idioma, tabExtraccion, networkCollector, htmlRaw);
+            if (networkResult != null)
+            {
+                return networkResult;
+            }
+
+            _logger.LogWarning("⚠️ No se capturó JSON válido de red. Ejecutando fallback javascript/ia-html...");
+            return await ExtraerFallbackExistenteAsync(page, htmlRaw, url, origen, destino, idioma, tabExtraccion);
+        }
 
         // ESTRATEGIA 1: JavaScript tradicional
         if (extractionMethod == "javascript" || extractionMethod == "js")
@@ -816,18 +832,13 @@ public class SherpaScraperService : IAsyncDisposable
 
                 if (extractionMethod == "ia-vision" || extractionMethod == "vision")
                 {
-                    // MÉTODO IA VISIÓN: Requiere screenshots
                     _logger.LogInformation("Usando extracción IA Visión (con screenshots)...");
                     extraccion = await ExtraerConIaVisionAsync(page, htmlRaw, origen, destino, idioma, tabExtraccion);
                 }
                 else if (extractionMethod == "ia-html" || extractionMethod == "html")
                 {
-                    // MÉTODO IA HTML: Solo requiere HTML
                     _logger.LogInformation("Usando extracción IA HTML (solo texto)...");
-                    
-                    // Determinar qué método usar según el proveedor configurado
                     var provider = _configuration["Extraction:IaHtml:Provider"]?.ToLower() ?? "openrouter";
-                    
                     if (provider == "openrouter")
                     {
                         extraccion = await _aiService.ExtraerConOpenRouterHtmlAsync(await ObtenerHtmlSegunTabAsync(page, htmlRaw, tabExtraccion), origen, destino, idioma);
@@ -840,16 +851,15 @@ public class SherpaScraperService : IAsyncDisposable
 
                 if (extraccion != null)
                 {
-                    // Serializar el objeto completo a JSON para guardar en la BD
                     var jsonDatos = System.Text.Json.JsonSerializer.Serialize(extraccion, new System.Text.Json.JsonSerializerOptions
                     {
                         WriteIndented = true,
                         PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase
                     });
-                    
+
                     _logger.LogInformation("✅ Extracción IA exitosa - Método: {Metodo}, JSON: {JsonLength} chars, Confianza: {Confianza:F2}", 
                         extractionMethod, jsonDatos.Length, extraccion.Confianza);
-                    
+
                     return ResultadoScraping.Exito(
                         datos: jsonDatos,
                         url: url,
@@ -867,7 +877,6 @@ public class SherpaScraperService : IAsyncDisposable
             }
         }
 
-        // FALLBACK: Métodos tradicionales
         _logger.LogInformation("Usando extracción tradicional (fallback)...");
         return await ExtraerDatosTradicionalesAsync(page, htmlRaw, url);
     }
@@ -1488,6 +1497,175 @@ public class SherpaScraperService : IAsyncDisposable
         return await page.ContentAsync();
     }
 
+    private async Task<ResultadoScraping?> ExtraerDatosNetworkJsonAsync(
+        IPage page,
+        string url,
+        string origen,
+        string destino,
+        string idioma,
+        TabExtraccion tabExtraccion,
+        NetworkJsonCollector collector,
+        string htmlRaw)
+    {
+        collector.SetSegment(TabExtraccion.Departure);
+        await page.WaitForTimeoutAsync(1500);
+
+        if (tabExtraccion is TabExtraccion.Return or TabExtraccion.Ambos)
+        {
+            collector.SetSegment(TabExtraccion.Return);
+            await ActivarTabAsync(page, "Return");
+            await page.WaitForTimeoutAsync(2000);
+        }
+
+        var departureJson = tabExtraccion is TabExtraccion.Departure or TabExtraccion.Ambos
+            ? collector.GetLatestPayload(TabExtraccion.Departure)
+            : null;
+
+        var returnJson = tabExtraccion is TabExtraccion.Return or TabExtraccion.Ambos
+            ? collector.GetLatestPayload(TabExtraccion.Return)
+            : null;
+
+        if (!collector.HasValidJsonFor(tabExtraccion))
+        {
+            return null;
+        }
+
+        var modelo = MapearNetworkJsonARequisitos(origen, destino, idioma, departureJson, returnJson, tabExtraccion);
+        var payload = new
+        {
+            metodoExtraccion = "network-json",
+            infoViaje = modelo.InfoViaje,
+            departure = modelo.Departure,
+            @return = modelo.Return,
+            raw = new { departure = departureJson, @return = returnJson }
+        };
+
+        var datosJson = JsonSerializer.Serialize(payload, new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+
+        return ResultadoScraping.Exito(
+            datos: datosJson,
+            url: url,
+            htmlRaw: htmlRaw,
+            requisitosDestino: ConstruirResumenTramo(modelo.Departure),
+            requisitosVisado: modelo.Departure?.Visa?.Descripcion ?? modelo.Return?.Visa?.Descripcion,
+            pasaportes: modelo.Departure?.Pasaporte?.Notas ?? modelo.Return?.Pasaporte?.Notas,
+            sanitarios: modelo.Departure?.Salud?.Notas ?? modelo.Return?.Salud?.Notas,
+            tabsExtraidas: tabExtraccion.ToString());
+    }
+
+    private async Task<ResultadoScraping> ExtraerFallbackExistenteAsync(
+        IPage page,
+        string htmlRaw,
+        string url,
+        string origen,
+        string destino,
+        string idioma,
+        TabExtraccion tabExtraccion)
+    {
+        if (_aiService != null && _configuration.GetValue<bool>("AI:Enabled", true) && _configuration.GetValue<bool>("Extraction:IaHtml:Enabled", false))
+        {
+            try
+            {
+                var htmlPorTab = await ObtenerHtmlSegunTabAsync(page, htmlRaw, tabExtraccion);
+                var extraccion = await _aiService.ExtraerConOpenRouterHtmlAsync(htmlPorTab, origen, destino, idioma)
+                    ?? await _aiService.ExtraerConKimiHtmlAsync(htmlPorTab, origen, destino, idioma);
+
+                if (extraccion != null)
+                {
+                    var jsonDatos = JsonSerializer.Serialize(extraccion, new JsonSerializerOptions { WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                    return ResultadoScraping.Exito(datos: jsonDatos, url: url, htmlRaw: htmlRaw, markdown: extraccion.Markdown, tabsExtraidas: tabExtraccion.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Fallback IA HTML falló, usando JavaScript tradicional");
+            }
+        }
+
+        return await ExtraerDatosTradicionalesAsync(page, htmlRaw, url);
+    }
+
+    private RequisitosViajeCompleto MapearNetworkJsonARequisitos(
+        string origen,
+        string destino,
+        string idioma,
+        string? departureJson,
+        string? returnJson,
+        TabExtraccion tabExtraccion)
+    {
+        var resultado = new RequisitosViajeCompleto
+        {
+            MetodoExtraccion = "network-json",
+            Confianza = 0.9,
+            InfoViaje = new InformacionViaje { Origen = origen, Destino = destino, Idioma = idioma }
+        };
+
+        if (tabExtraccion is TabExtraccion.Departure or TabExtraccion.Ambos)
+        {
+            resultado.Departure = MapearTramoDesdeJson(departureJson, "Departure", origen, destino);
+        }
+
+        if (tabExtraccion is TabExtraccion.Return or TabExtraccion.Ambos)
+        {
+            resultado.Return = MapearTramoDesdeJson(returnJson, "Return", destino, origen);
+        }
+
+        return resultado;
+    }
+
+    private RequisitosTramo MapearTramoDesdeJson(string? rawJson, string direccion, string salida, string llegada)
+    {
+        var tramo = new RequisitosTramo
+        {
+            Direccion = direccion,
+            PaisSalida = salida,
+            PaisLlegada = llegada
+        };
+
+        if (string.IsNullOrWhiteSpace(rawJson))
+        {
+            return tramo;
+        }
+
+        try
+        {
+            using var doc = JsonDocument.Parse(rawJson);
+            var rootText = doc.RootElement.ToString();
+            tramo.Visa.Descripcion = ExtraerTextoPorClaves(rootText, "visa", "entry", "permit");
+            tramo.Visa.Requerido = !string.IsNullOrWhiteSpace(tramo.Visa.Descripcion) &&
+                                   !tramo.Visa.Descripcion.Contains("not required", StringComparison.OrdinalIgnoreCase);
+
+            tramo.Pasaporte.Notas = ExtraerTextoPorClaves(rootText, "passport", "document", "valid");
+            tramo.Salud.Notas = ExtraerTextoPorClaves(rootText, "health", "vacc", "covid", "test");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "No se pudo mapear JSON para tramo {Tramo}", direccion);
+        }
+
+        return tramo;
+    }
+
+    private static string? ExtraerTextoPorClaves(string content, params string[] keys)
+    {
+        var lines = content.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Where(l => keys.Any(k => l.Contains(k, StringComparison.OrdinalIgnoreCase)))
+            .Take(8)
+            .ToList();
+
+        return lines.Count == 0 ? null : string.Join(" | ", lines);
+    }
+
+    private static string? ConstruirResumenTramo(RequisitosTramo? tramo)
+    {
+        if (tramo == null) return null;
+        return $"[{tramo.Direccion}] Visa: {tramo.Visa.Descripcion ?? "N/D"}\nPasaporte: {tramo.Pasaporte.Notas ?? "N/D"}\nSalud: {tramo.Salud.Notas ?? "N/D"}";
+    }
+
     /// <summary>
     /// Libera los recursos de Playwright
     /// </summary>
@@ -1508,6 +1686,58 @@ public class SherpaScraperService : IAsyncDisposable
 
         _disposed = true;
         GC.SuppressFinalize(this);
+    }
+
+    private sealed class NetworkJsonCollector
+    {
+        private readonly ILogger _logger;
+        private readonly ConcurrentDictionary<TabExtraccion, string> _payloads = new();
+        private TabExtraccion _currentSegment = TabExtraccion.Departure;
+
+        public NetworkJsonCollector(ILogger logger)
+        {
+            _logger = logger;
+        }
+
+        public void SetSegment(TabExtraccion segment) => _currentSegment = segment;
+
+        public void OnResponseAsync(object? _, IResponse response)
+            => _ = HandleResponseAsync(response);
+
+        private async Task HandleResponseAsync(IResponse response)
+        {
+            try
+            {
+                var url = response.Url;
+                if (!url.Contains("requirements-api.joinsherpa.com", StringComparison.OrdinalIgnoreCase)) return;
+                if (!url.Contains("/trips", StringComparison.OrdinalIgnoreCase)) return;
+                if (!url.Contains("include=restriction,procedure", StringComparison.OrdinalIgnoreCase)) return;
+                if (response.Status < 200 || response.Status >= 300) return;
+
+                var body = await response.TextAsync();
+                if (string.IsNullOrWhiteSpace(body)) return;
+
+                try { JsonDocument.Parse(body); }
+                catch { return; }
+
+                _payloads[_currentSegment] = body;
+                _logger.LogInformation("📡 Network JSON capturado | Tab={Tab} | URL={Url} | Payload={Size} bytes", _currentSegment, url, body.Length);
+            }
+            catch
+            {
+                // no-op
+            }
+        }
+
+        public string? GetLatestPayload(TabExtraccion segment) => _payloads.TryGetValue(segment, out var value) ? value : null;
+
+        public bool HasValidJsonFor(TabExtraccion tab) => tab switch
+        {
+            TabExtraccion.Departure => !string.IsNullOrWhiteSpace(GetLatestPayload(TabExtraccion.Departure)),
+            TabExtraccion.Return => !string.IsNullOrWhiteSpace(GetLatestPayload(TabExtraccion.Return)),
+            _ => !string.IsNullOrWhiteSpace(GetLatestPayload(TabExtraccion.Departure)) ||
+                 !string.IsNullOrWhiteSpace(GetLatestPayload(TabExtraccion.Return))
+        };
     }
 
     /// <summary>
