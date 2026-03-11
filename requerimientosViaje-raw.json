@@ -1,0 +1,6998 @@
+{
+	"meta": {
+		"copyright": "Sherpa",
+		"version": "3.0.2"
+	},
+	"data": {
+		"id": "e38054b7-1127-4ea6-8d03-e67161d84f94",
+		"type": "TRIP",
+		"attributes": {
+			"traveller": {
+				"passports": [
+					"COL"
+				],
+				"vaccinations": [
+					{
+						"type": "COVID_19",
+						"status": "NOT_VACCINATED"
+					}
+				],
+				"travelPurposes": [
+					"TOURISM"
+				]
+			},
+			"locale": "en-US",
+			"travelNodes": [
+				{
+					"type": "ORIGIN",
+					"departure": {
+						"date": "2026-03-17",
+						"time": "00:00"
+					},
+					"locationCode": "USA",
+					"locationName": "United States"
+				},
+				{
+					"type": "DESTINATION",
+					"arrival": {
+						"date": "2026-03-17",
+						"time": "00:00"
+					},
+					"locationCode": "COL",
+					"locationName": "Colombia"
+				}
+			],
+			"headline": "You don't need a visa for Colombia if you have a Colombian passport.",
+			"informationGroups": [
+				{
+					"name": "Visa Requirements",
+					"type": "VISA_REQUIREMENTS",
+					"tooltip": "Visa requirements are determined by the passport you are travelling with and duration of your trip.",
+					"groupings": [
+						{
+							"name": "Colombia",
+							"enforcement": "NOT_REQUIRED",
+							"data": [
+								{
+									"type": "PROCEDURE",
+									"id": "generated-procedure-notRequired-visa-COL"
+								}
+							]
+						}
+					],
+					"enforcement": "NOT_REQUIRED",
+					"headline": "You don't need a visa for Colombia if you have a Colombian passport."
+				},
+				{
+					"name": "Passport and Documents",
+					"type": "DOCUMENTS_AND_FORMS",
+					"groupings": [
+						{
+							"name": "Colombia",
+							"enforcement": "MANDATORY",
+							"data": [
+								{
+									"type": "PROCEDURE",
+									"id": "2c6dded0-67a2-8030-9f7f-f49ad92ecd41"
+								},
+								{
+									"type": "PROCEDURE",
+									"id": "ac193706-7f4b-4184-98d6-a866ebf73fc3"
+								}
+							]
+						}
+					],
+					"enforcement": "MANDATORY"
+				},
+				{
+					"name": "Health Risks and Requirements",
+					"type": "PUBLIC_HEALTH_REQUIREMENTS",
+					"groupings": [
+						{
+							"name": "Colombia",
+							"enforcement": "RECOMMENDED",
+							"data": [
+								{
+									"type": "PROCEDURE",
+									"id": "21fdded0-67a2-805d-8f3d-c9955a6413f0"
+								},
+								{
+									"type": "PROCEDURE",
+									"id": "acaaa925-076e-44de-9de3-33552d483c09"
+								},
+								{
+									"id": "generated-procedure-prescription-medication-COL"
+								}
+							]
+						}
+					],
+					"enforcement": "RECOMMENDED"
+				},
+				{
+					"name": "Travel Restrictions",
+					"type": "TRAVEL_RESTRICTIONS",
+					"tooltip": "Travel restrictions often depend on your travel history. Check details for each part of your trip to see if any of them apply to you."
+				},
+				{
+					"name": "Additional Information",
+					"type": "ADDITIONAL_INFORMATION"
+				},
+				{
+					"name": "Upcoming",
+					"type": "UPCOMING",
+					"tooltip": "Some of these changes may not be in effect yet and may change unexpectedly."
+				}
+			],
+			"currency": "USD",
+			"travelOpenness": "LEVEL_1"
+		},
+		"relationships": {
+			"restrictions": {
+				"data": [],
+				"meta": {
+					"count": 0
+				}
+			},
+			"procedures": {
+				"data": [
+					{
+						"type": "PROCEDURE",
+						"id": "2c6dded0-67a2-8030-9f7f-f49ad92ecd41"
+					},
+					{
+						"type": "PROCEDURE",
+						"id": "ac193706-7f4b-4184-98d6-a866ebf73fc3"
+					},
+					{
+						"type": "PROCEDURE",
+						"id": "21fdded0-67a2-805d-8f3d-c9955a6413f0"
+					},
+					{
+						"type": "PROCEDURE",
+						"id": "acaaa925-076e-44de-9de3-33552d483c09"
+					},
+					{
+						"type": "PROCEDURE",
+						"id": "generated-procedure-notRequired-visa-COL"
+					},
+					{
+						"id": "generated-procedure-prescription-medication-COL"
+					}
+				],
+				"meta": {
+					"count": 6
+				}
+			},
+			"products": {
+				"data": [],
+				"meta": {
+					"count": 0
+				}
+			}
+		}
+	},
+	"included": [
+		{
+			"id": "2c6dded0-67a2-8030-9f7f-f49ad92ecd41",
+			"type": "PROCEDURE",
+			"attributes": {
+				"category": "DOC_REQUIREMENT",
+				"subCategory": "BEFORE_ARRIVAL",
+				"title": "Mandatory proof of accommodation ",
+				"description": "Travelers must have proof of accommodation during their stay in Colombia. \n\nIf travelers will be hosted by a relative or friend, the host must provide a signed letter of invitation, stating the address and contact phone number. It should include the identification details of both the host and the traveler, and indicate whether the host will cover the traveler’s living expenses. Alternatively, the traveler may attach bank or credit card statements to demonstrate financial solvency.",
+				"more": [],
+				"actions": [],
+				"sources": [
+					{
+						"type": "GOVERNMENT",
+						"title": "Colombian Foreign Ministry ",
+						"url": "https://www.cancilleria.gov.co/tramites_servicios/visa/abece-visas"
+					}
+				],
+				"lastUpdatedAt": "2026-03-10T12:23:00.000Z",
+				"createdAt": "2025-12-11T15:04:00.000Z",
+				"startDate": null,
+				"endDate": null,
+				"enforcement": "MANDATORY",
+				"documentTypes": [
+					"ACCOMMODATION_BOOKING"
+				],
+				"tags": [
+					"international",
+					"fully_vaccinated",
+					"not_vaccinated",
+					"air"
+				],
+				"included": [
+					{
+						"code": "AFG",
+						"text": "Afghanistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ALA",
+						"text": "Åland Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ALB",
+						"text": "Albania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DZA",
+						"text": "Algeria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ASM",
+						"text": "American Samoa",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AND",
+						"text": "Andorra",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AGO",
+						"text": "Angola",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AIA",
+						"text": "Anguilla",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ATG",
+						"text": "Antigua and Barbuda",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ARG",
+						"text": "Argentina",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ARM",
+						"text": "Armenia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ABW",
+						"text": "Aruba",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AUS",
+						"text": "Australia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AUT",
+						"text": "Austria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AZE",
+						"text": "Azerbaijan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BHS",
+						"text": "Bahamas",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BHR",
+						"text": "Bahrain",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BGD",
+						"text": "Bangladesh",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BRB",
+						"text": "Barbados",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BLR",
+						"text": "Belarus",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BEL",
+						"text": "Belgium",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BLZ",
+						"text": "Belize",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BEN",
+						"text": "Benin",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BMU",
+						"text": "Bermuda",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BTN",
+						"text": "Bhutan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BOL",
+						"text": "Bolivia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BES",
+						"text": "Bonaire, Sint Eustatius and Saba",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BIH",
+						"text": "Bosnia and Herzegovina",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BWA",
+						"text": "Botswana",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BRA",
+						"text": "Brazil",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IOT",
+						"text": "British Indian Ocean Territory",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "UMI",
+						"text": "United States Minor Outlying Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VGB",
+						"text": "British Virgin Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VIR",
+						"text": "U.S. Virgin Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BRN",
+						"text": "Brunei",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BGR",
+						"text": "Bulgaria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BFA",
+						"text": "Burkina Faso",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BDI",
+						"text": "Burundi",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KHM",
+						"text": "Cambodia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CMR",
+						"text": "Cameroon",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CAN",
+						"text": "Canada",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CPV",
+						"text": "Cape Verde",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CYM",
+						"text": "Cayman Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CAF",
+						"text": "Central African Republic",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TCD",
+						"text": "Chad",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CHL",
+						"text": "Chile",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CHN",
+						"text": "Mainland China",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CXR",
+						"text": "Christmas Island",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CCK",
+						"text": "Cocos (Keeling) Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "COM",
+						"text": "Comoros",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "COG",
+						"text": "Congo",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "COD",
+						"text": "Democratic Republic of the Congo",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "COK",
+						"text": "Cook Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CRI",
+						"text": "Costa Rica",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HRV",
+						"text": "Croatia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CUB",
+						"text": "Cuba",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CUW",
+						"text": "Curaçao",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CYP",
+						"text": "Cyprus",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CZE",
+						"text": "Czech Republic",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DNK",
+						"text": "Denmark",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DJI",
+						"text": "Djibouti",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DMA",
+						"text": "Dominica",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DOM",
+						"text": "Dominican Republic",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ECU",
+						"text": "Ecuador",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "EGY",
+						"text": "Egypt",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SLV",
+						"text": "El Salvador",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GNQ",
+						"text": "Equatorial Guinea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ERI",
+						"text": "Eritrea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "EST",
+						"text": "Estonia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ETH",
+						"text": "Ethiopia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FLK",
+						"text": "Falkland Islands (Islas Malvinas)",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FRO",
+						"text": "Faroe Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FJI",
+						"text": "Fiji",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FIN",
+						"text": "Finland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FRA",
+						"text": "France",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GUF",
+						"text": "French Guiana",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PYF",
+						"text": "French Polynesia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GAB",
+						"text": "Gabon",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GMB",
+						"text": "Gambia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GEO",
+						"text": "Georgia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DEU",
+						"text": "Germany",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GHA",
+						"text": "Ghana",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GIB",
+						"text": "Gibraltar",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GRC",
+						"text": "Greece",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GRL",
+						"text": "Greenland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GRD",
+						"text": "Grenada",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GLP",
+						"text": "Guadeloupe",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GUM",
+						"text": "Guam",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GTM",
+						"text": "Guatemala",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GGY",
+						"text": "Guernsey",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GIN",
+						"text": "Guinea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GNB",
+						"text": "Guinea-Bissau",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GUY",
+						"text": "Guyana",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HTI",
+						"text": "Haiti",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VAT",
+						"text": "Vatican City",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HND",
+						"text": "Honduras",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HKG",
+						"text": "Hong Kong SAR",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HUN",
+						"text": "Hungary",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ISL",
+						"text": "Iceland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IND",
+						"text": "India",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IDN",
+						"text": "Indonesia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CIV",
+						"text": "Ivory Coast",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IRN",
+						"text": "Iran",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IRQ",
+						"text": "Iraq",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IRL",
+						"text": "Ireland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IMN",
+						"text": "Isle of Man",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ISR",
+						"text": "Israel",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ITA",
+						"text": "Italy",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "JAM",
+						"text": "Jamaica",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "JPN",
+						"text": "Japan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "JEY",
+						"text": "Jersey",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "JOR",
+						"text": "Jordan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KAZ",
+						"text": "Kazakhstan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KEN",
+						"text": "Kenya",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KIR",
+						"text": "Kiribati",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KWT",
+						"text": "Kuwait",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KGZ",
+						"text": "Kyrgyzstan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LAO",
+						"text": "Laos",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LVA",
+						"text": "Latvia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LBN",
+						"text": "Lebanon",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LSO",
+						"text": "Lesotho",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LBR",
+						"text": "Liberia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LBY",
+						"text": "Libya",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LIE",
+						"text": "Liechtenstein",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LTU",
+						"text": "Lithuania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LUX",
+						"text": "Luxembourg",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MAC",
+						"text": "Macau SAR",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MKD",
+						"text": "North Macedonia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MDG",
+						"text": "Madagascar",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MWI",
+						"text": "Malawi",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MYS",
+						"text": "Malaysia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MDV",
+						"text": "Maldives",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MLI",
+						"text": "Mali",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MLT",
+						"text": "Malta",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MHL",
+						"text": "Marshall Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MTQ",
+						"text": "Martinique",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MRT",
+						"text": "Mauritania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MUS",
+						"text": "Mauritius",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MYT",
+						"text": "Mayotte",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MEX",
+						"text": "Mexico",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FSM",
+						"text": "Micronesia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MDA",
+						"text": "Moldova",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MCO",
+						"text": "Monaco",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MNG",
+						"text": "Mongolia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MNE",
+						"text": "Montenegro",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MSR",
+						"text": "Montserrat",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MAR",
+						"text": "Morocco",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MOZ",
+						"text": "Mozambique",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MMR",
+						"text": "Myanmar",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NAM",
+						"text": "Namibia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NRU",
+						"text": "Nauru",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NPL",
+						"text": "Nepal",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NLD",
+						"text": "Netherlands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NCL",
+						"text": "New Caledonia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NZL",
+						"text": "New Zealand",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NIC",
+						"text": "Nicaragua",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NER",
+						"text": "Niger",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NGA",
+						"text": "Nigeria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NIU",
+						"text": "Niue",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NFK",
+						"text": "Norfolk Island",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MNP",
+						"text": "Northern Mariana Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NOR",
+						"text": "Norway",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "OMN",
+						"text": "Oman",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PAK",
+						"text": "Pakistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PLW",
+						"text": "Palau",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PSE",
+						"text": "Palestinian Territories",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PAN",
+						"text": "Panama",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PNG",
+						"text": "Papua New Guinea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PRY",
+						"text": "Paraguay",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PER",
+						"text": "Peru",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PHL",
+						"text": "Philippines",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PCN",
+						"text": "Pitcairn Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "POL",
+						"text": "Poland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PRT",
+						"text": "Portugal",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PRI",
+						"text": "Puerto Rico",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "QAT",
+						"text": "Qatar",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "RKS",
+						"text": "Kosovo",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "REU",
+						"text": "Réunion",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ROU",
+						"text": "Romania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "RUS",
+						"text": "Russia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "RWA",
+						"text": "Rwanda",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BLM",
+						"text": "Saint Barthélemy",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SHN",
+						"text": "Saint Helena, Ascension and Tristan da Cunha",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KNA",
+						"text": "Saint Kitts and Nevis",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LCA",
+						"text": "Saint Lucia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MAF",
+						"text": "Saint Martin",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SPM",
+						"text": "Saint Pierre and Miquelon",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VCT",
+						"text": "Saint Vincent and the Grenadines",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "WSM",
+						"text": "Samoa",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SMR",
+						"text": "San Marino",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "STP",
+						"text": "São Tomé and Príncipe",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SAU",
+						"text": "Saudi Arabia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SEN",
+						"text": "Senegal",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SRB",
+						"text": "Serbia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SYC",
+						"text": "Seychelles",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SLE",
+						"text": "Sierra Leone",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SGP",
+						"text": "Singapore",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SXM",
+						"text": "Sint Maarten",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SVK",
+						"text": "Slovakia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SVN",
+						"text": "Slovenia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SLB",
+						"text": "Solomon Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SOM",
+						"text": "Somalia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ZAF",
+						"text": "South Africa",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SGS",
+						"text": "South Georgia and the South Sandwich Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KOR",
+						"text": "South Korea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SSD",
+						"text": "South Sudan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ESP",
+						"text": "Spain",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LKA",
+						"text": "Sri Lanka",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SDN",
+						"text": "Sudan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SUR",
+						"text": "Suriname",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SJM",
+						"text": "Svalbard and Jan Mayen",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SWZ",
+						"text": "Eswatini",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SWE",
+						"text": "Sweden",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CHE",
+						"text": "Switzerland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SYR",
+						"text": "Syria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TWN",
+						"text": "Taiwan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TJK",
+						"text": "Tajikistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TZA",
+						"text": "Tanzania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "THA",
+						"text": "Thailand",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TLS",
+						"text": "East Timor",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TGO",
+						"text": "Togo",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TKL",
+						"text": "Tokelau",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TON",
+						"text": "Tonga",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TTO",
+						"text": "Trinidad and Tobago",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TUN",
+						"text": "Tunisia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TUR",
+						"text": "Türkiye",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TKM",
+						"text": "Turkmenistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TCA",
+						"text": "Turks and Caicos Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TUV",
+						"text": "Tuvalu",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "UGA",
+						"text": "Uganda",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "UKR",
+						"text": "Ukraine",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ARE",
+						"text": "United Arab Emirates",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GBR",
+						"text": "United Kingdom",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "USA",
+						"text": "United States",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "URY",
+						"text": "Uruguay",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "UZB",
+						"text": "Uzbekistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VUT",
+						"text": "Vanuatu",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VEN",
+						"text": "Venezuela",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VNM",
+						"text": "Vietnam",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "WLF",
+						"text": "Wallis and Futuna",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ZMB",
+						"text": "Zambia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ZWE",
+						"text": "Zimbabwe",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AFG",
+						"text": "Afghanistan (AFG)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "ALB",
+						"text": "Albania (ALB)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "DZA",
+						"text": "Algeria (DZA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "AND",
+						"text": " Andorra (AND)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "AGO",
+						"text": "Angola (AGO)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "ATG",
+						"text": "Antigua and Barbuda (ATG)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "ARG",
+						"text": "Argentina (ARG)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "ARM",
+						"text": "Armenia (ARM)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "AUS",
+						"text": "Australia (AUS)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "AUT",
+						"text": "Austria (AUT)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "AZE",
+						"text": "Azerbaijan (AZE)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BHS",
+						"text": "Bahamas (BHS)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BHR",
+						"text": "Bahrain (BHR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BGD",
+						"text": "Bangladesh (BGD)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BRB",
+						"text": "Barbados (BRB)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BLR",
+						"text": "Belarus (BLR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BEL",
+						"text": "Belgium (BEL)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BLZ",
+						"text": "Belize (BLZ)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BEN",
+						"text": "Benin (BEN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BMU",
+						"text": "Bermuda (GBR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BTN",
+						"text": "Bhutan (BTN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BOL",
+						"text": "Bolivia (BOL)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BIH",
+						"text": "Bosnia and Herzegovina (BIH)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BWA",
+						"text": "Botswana (BWA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BRA",
+						"text": "Brazil (BRA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BRN",
+						"text": "Brunei (BRN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BGR",
+						"text": "Bulgaria (BGR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BFA",
+						"text": "Burkina Faso (BFA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "BDI",
+						"text": "Burundi (BDI)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "CPV",
+						"text": "Cape Verde (CPV)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "KHM",
+						"text": "Cambodia (KHM)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "CMR",
+						"text": "Cameroon (CMR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "CAN",
+						"text": "Canada (CAN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "CAF",
+						"text": "Central African Republic (CAF)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "TCD",
+						"text": "Chad (TCD)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "CHL",
+						"text": "Chile (CHL)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "CHN",
+						"text": "China (CHN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "COL",
+						"text": "Colombia (COL)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "COM",
+						"text": "Comoros (COM)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "COG",
+						"text": "Republic of Congo (COG)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "CRI",
+						"text": "Costa Rica (CRI)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "HRV",
+						"text": "Croatia (HRV)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "CUB",
+						"text": "Cuba (CUB)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "CYP",
+						"text": "Cyprus (CYP)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "CZE",
+						"text": "Czech Republic (CZE)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "DNK",
+						"text": "Denmark (DNK)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "DJI",
+						"text": "Djibouti (DJI)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "DMA",
+						"text": "Dominica (DMA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "DOM",
+						"text": "Dominican Republic (DOM)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "COD",
+						"text": "Democratic Rep. of the Congo (COD)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "TLS",
+						"text": "East Timor (TLS)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "ECU",
+						"text": "Ecuador (ECU)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "EGY",
+						"text": "Egypt (EGY)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SLV",
+						"text": "El Salvador (SLV)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "GNQ",
+						"text": "Equatorial Guinea (GNQ)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "ERI",
+						"text": "Eritrea (ERI)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "EST",
+						"text": "Estonia (EST)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SWZ",
+						"text": "Eswatini (SWZ)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "ETH",
+						"text": "Ethiopia (ETH)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "FJI",
+						"text": "Fiji (FJI)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "FIN",
+						"text": "Finland (FIN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "FRA",
+						"text": "France (FRA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "GAB",
+						"text": "Gabon (GAB)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "GMB",
+						"text": "Gambia (GMB)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "GEO",
+						"text": "Georgia (GEO)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "DEU",
+						"text": "Germany (D)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "GHA",
+						"text": "Ghana (GHA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "GRC",
+						"text": "Greece (GRC)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "GRD",
+						"text": "Grenada (GRD)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "GTM",
+						"text": "Guatemala (GTM)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "GIN",
+						"text": "Guinea (GIN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "GNB",
+						"text": "Guinea-Bissau (GNB)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "GUY",
+						"text": "Guyana (GUY)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "HTI",
+						"text": "Haiti (HTI)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "HND",
+						"text": "Honduras (HND)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "HKG",
+						"text": "Hong Kong SAR (CHN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "HUN",
+						"text": "Hungary (HUN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "ISL",
+						"text": "Iceland (ISL)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "IND",
+						"text": "India (IND)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "IDN",
+						"text": "Indonesia (IDN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "IRN",
+						"text": "Iran (IRN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "IRQ",
+						"text": "Iraq (IRQ)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "IRL",
+						"text": "Ireland (IRL)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "ISR",
+						"text": "Israel (ISR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "ITA",
+						"text": "Italy (ITA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "CIV",
+						"text": "Ivory Coast (CIV)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "JAM",
+						"text": "Jamaica (JAM)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "JPN",
+						"text": "Japan (JPN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "JOR",
+						"text": "Jordan (JOR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "KAZ",
+						"text": "Kazakhstan (KAZ)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "KEN",
+						"text": "Kenya (KEN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "KIR",
+						"text": "Kiribati (KIR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "RKS",
+						"text": "Kosovo (RKS)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "KWT",
+						"text": "Kuwait (KWT)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "KGZ",
+						"text": "Kyrgyzstan (KGZ)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "LAO",
+						"text": "Laos (LAO)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "LVA",
+						"text": "Latvia (LVA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "LBN",
+						"text": "Lebanon (LBN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "LSO",
+						"text": "Lesotho (LSO)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "LBR",
+						"text": "Liberia (LBR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "LBY",
+						"text": "Libya (LBY)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "LIE",
+						"text": "Liechtenstein (LIE)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "LTU",
+						"text": "Lithuania (LTU)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "LUX",
+						"text": "Luxembourg (LUX)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MAC",
+						"text": "Macao SAR (CHN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MDG",
+						"text": "Madagascar (MDG)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MWI",
+						"text": "Malawi (MWI)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MYS",
+						"text": "Malaysia (MYS)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MDV",
+						"text": "Maldives (MDV)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MLI",
+						"text": "Mali (MLI)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MLT",
+						"text": "Malta (MLT)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MHL",
+						"text": "Marshall Islands (MHL)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MRT",
+						"text": "Mauritania (MRT)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MUS",
+						"text": "Mauritius (MUS)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MEX",
+						"text": "Mexico (MEX)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "FSM",
+						"text": "Micronesia (FSM)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "NRU",
+						"text": "Nauru (NRU)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "PLW",
+						"text": "Palau (PLW)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MDA",
+						"text": "Moldova (MDA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MCO",
+						"text": "Monaco (MCO)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MNG",
+						"text": "Mongolia (MNG)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MNE",
+						"text": "Montenegro (MNE)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MAR",
+						"text": "Morocco (MAR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MOZ",
+						"text": "Mozambique (MOZ)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MMR",
+						"text": "Myanmar (MMR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "NAM",
+						"text": "Namibia (NAM)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "NPL",
+						"text": "Nepal (NPL)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "NLD",
+						"text": "Netherlands (NLD)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "NZL",
+						"text": "New Zealand (NZL)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "NIC",
+						"text": "Nicaragua (NIC)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "NER",
+						"text": "Niger (NER)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "NGA",
+						"text": "Nigeria (NGA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "MKD",
+						"text": "North Macedonia (MKD)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "NOR",
+						"text": "Norway (NOR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "OMN",
+						"text": "Oman (OMN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "PAK",
+						"text": "Pakistan (PAK)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "PSE",
+						"text": "Palestine (PSE)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "PAN",
+						"text": "Panama (PAN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "PNG",
+						"text": "Papua New Guinea (PNG)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "PRY",
+						"text": "Paraguay (PRY)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "PER",
+						"text": "Peru (PER)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "PHL",
+						"text": "Philippines (PHL)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "POL",
+						"text": "Poland (POL)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "PRT",
+						"text": "Portugal (PRT)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "QAT",
+						"text": "Qatar (QAT)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "ROU",
+						"text": "Romania (ROU)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "RUS",
+						"text": "Russia (RUS)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "RWA",
+						"text": "Rwanda (RWA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "KNA",
+						"text": "Saint Kitts and Nevis (KNA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "LCA",
+						"text": "Saint Lucia (LCA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "VCT",
+						"text": "Saint Vincent and the Grenadines (VCT)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "WSM",
+						"text": "Samoa (WSM)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SMR",
+						"text": "San Marino (SMR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "STP",
+						"text": "Sao Tome and Principe (STP)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SAU",
+						"text": "Saudi Arabia (SAU)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SEN",
+						"text": "Senegal (SEN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SRB",
+						"text": "Serbia (SRB)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SYC",
+						"text": "Seychelles (SYC)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SLE",
+						"text": "Sierra Leone (SLE)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SGP",
+						"text": "Singapore (SGP)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SVK",
+						"text": "Slovakia (SVK)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SVN",
+						"text": "Slovenia (SVN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SLB",
+						"text": "Solomon Islands (SLB)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SOM",
+						"text": "Somalia (SOM)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "ZAF",
+						"text": "South Africa (ZAF)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "KOR",
+						"text": "South Korea (KOR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SSD",
+						"text": "South Sudan (SSD)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "ESP",
+						"text": "Spain (ESP)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "LKA",
+						"text": "Sri Lanka (LKA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SDN",
+						"text": "Sudan (SDN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SUR",
+						"text": "Suriname (SUR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SWE",
+						"text": "Sweden (SWE)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "CHE",
+						"text": "Switzerland (CHE)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "SYR",
+						"text": "Syria (SYR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "TWN",
+						"text": "Taiwan (TWN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "TJK",
+						"text": "Tajikistan (TJK)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "TZA",
+						"text": "Tanzania (TZA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "THA",
+						"text": "Thailand (THA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "TGO",
+						"text": "Togo (TGO)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "TON",
+						"text": "Tonga (TON)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "TTO",
+						"text": "Trinidad and Tobago (TTO)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "TUN",
+						"text": "Tunisia (TUN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "TUR",
+						"text": "Türkiye (TUR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "TKM",
+						"text": "Turkmenistan (TKM)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "TUV",
+						"text": "Tuvalu (TUV)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "UGA",
+						"text": "Uganda (UGA)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "GBR",
+						"text": "United Kingdom (GBR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "UKR",
+						"text": "Ukraine (UKR)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "ARE",
+						"text": "United Arab Emirates (ARE)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "URY",
+						"text": "Uruguay (URY)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "UZB",
+						"text": "Uzbekistan (UZB)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "VUT",
+						"text": "Vanuatu (VUT)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "VAT",
+						"text": "Vatican City (VAT)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "VEN",
+						"text": "Venezuela (VEN)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "VNM",
+						"text": "Vietnam (VNM)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "YEM",
+						"text": "Yemen (YEM)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "ZMB",
+						"text": "Zambia (ZMB)",
+						"type": "PASSPORT"
+					},
+					{
+						"code": "ZWE",
+						"text": "Zimbabwe (ZWE)",
+						"type": "PASSPORT"
+					}
+				],
+				"icon": {
+					"name": "document"
+				}
+			},
+			"relationships": {
+				"location": {
+					"data": {
+						"id": "COL",
+						"type": "LOCATION"
+					}
+				}
+			}
+		},
+		{
+			"id": "ac193706-7f4b-4184-98d6-a866ebf73fc3",
+			"type": "PROCEDURE",
+			"attributes": {
+				"category": "DOC_REQUIREMENT",
+				"subCategory": "BEFORE_ARRIVAL",
+				"title": "Recommended pre-registration form before arrival",
+				"description": "Travelers are encouraged to complete a pre-registration form (CheckMig) before departure to Colombia. The form can be completed between 72 hours and 1 hour before travel. Completing the form in advance may reduce waiting times at immigration checkpoints.",
+				"more": [
+					"This requirement doesn’t apply to the following travelers:\n-Travelers under the age of 18."
+				],
+				"actions": [
+					{
+						"type": "LINK",
+						"title": "Apply online",
+						"url": "https://apps.migracioncolombia.gov.co/pre-registro/en",
+						"provider": "government",
+						"intent": "none",
+						"productId": "COL_CHECKMIG"
+					}
+				],
+				"sources": [
+					{
+						"type": "GOVERNMENT",
+						"title": "Colombian Tourism",
+						"url": "https://colombia.travel/en/reopening-international-flights-in-colombia"
+					}
+				],
+				"lastUpdatedAt": "2026-03-10T11:59:00.000Z",
+				"createdAt": "2020-05-29T13:32:00.000Z",
+				"startDate": "2020-03-15T00:00:00.000Z",
+				"endDate": null,
+				"enforcement": "RECOMMENDED",
+				"documentTypes": [
+					"TRAVEL_AUTHORIZATION"
+				],
+				"tags": [
+					"international",
+					"fully_vaccinated",
+					"not_vaccinated",
+					"air",
+					"land",
+					"sea",
+					"tourism",
+					"business"
+				],
+				"travelPurposes": [
+					"TOURISM",
+					"BUSINESS"
+				],
+				"included": [
+					{
+						"code": "AFG",
+						"text": "Afghanistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ALA",
+						"text": "Åland Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ALB",
+						"text": "Albania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DZA",
+						"text": "Algeria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ASM",
+						"text": "American Samoa",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AND",
+						"text": "Andorra",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AGO",
+						"text": "Angola",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AIA",
+						"text": "Anguilla",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ATG",
+						"text": "Antigua and Barbuda",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ARG",
+						"text": "Argentina",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ARM",
+						"text": "Armenia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ABW",
+						"text": "Aruba",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AUS",
+						"text": "Australia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AUT",
+						"text": "Austria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AZE",
+						"text": "Azerbaijan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BHS",
+						"text": "Bahamas",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BHR",
+						"text": "Bahrain",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BGD",
+						"text": "Bangladesh",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BRB",
+						"text": "Barbados",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BLR",
+						"text": "Belarus",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BEL",
+						"text": "Belgium",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BLZ",
+						"text": "Belize",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BEN",
+						"text": "Benin",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BMU",
+						"text": "Bermuda",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BTN",
+						"text": "Bhutan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BOL",
+						"text": "Bolivia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BES",
+						"text": "Bonaire, Sint Eustatius and Saba",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BIH",
+						"text": "Bosnia and Herzegovina",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BWA",
+						"text": "Botswana",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BRA",
+						"text": "Brazil",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IOT",
+						"text": "British Indian Ocean Territory",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "UMI",
+						"text": "United States Minor Outlying Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VGB",
+						"text": "British Virgin Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VIR",
+						"text": "U.S. Virgin Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BRN",
+						"text": "Brunei",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BGR",
+						"text": "Bulgaria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BFA",
+						"text": "Burkina Faso",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BDI",
+						"text": "Burundi",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KHM",
+						"text": "Cambodia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CMR",
+						"text": "Cameroon",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CAN",
+						"text": "Canada",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CPV",
+						"text": "Cape Verde",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CYM",
+						"text": "Cayman Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CAF",
+						"text": "Central African Republic",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TCD",
+						"text": "Chad",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CHL",
+						"text": "Chile",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CHN",
+						"text": "Mainland China",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CXR",
+						"text": "Christmas Island",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CCK",
+						"text": "Cocos (Keeling) Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "COM",
+						"text": "Comoros",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "COG",
+						"text": "Congo",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "COD",
+						"text": "Democratic Republic of the Congo",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "COK",
+						"text": "Cook Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CRI",
+						"text": "Costa Rica",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HRV",
+						"text": "Croatia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CUB",
+						"text": "Cuba",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CUW",
+						"text": "Curaçao",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CYP",
+						"text": "Cyprus",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CZE",
+						"text": "Czech Republic",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DNK",
+						"text": "Denmark",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DJI",
+						"text": "Djibouti",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DMA",
+						"text": "Dominica",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DOM",
+						"text": "Dominican Republic",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ECU",
+						"text": "Ecuador",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "EGY",
+						"text": "Egypt",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SLV",
+						"text": "El Salvador",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GNQ",
+						"text": "Equatorial Guinea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ERI",
+						"text": "Eritrea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "EST",
+						"text": "Estonia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ETH",
+						"text": "Ethiopia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FLK",
+						"text": "Falkland Islands (Islas Malvinas)",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FRO",
+						"text": "Faroe Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FJI",
+						"text": "Fiji",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FIN",
+						"text": "Finland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FRA",
+						"text": "France",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GUF",
+						"text": "French Guiana",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PYF",
+						"text": "French Polynesia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GAB",
+						"text": "Gabon",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GMB",
+						"text": "Gambia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GEO",
+						"text": "Georgia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DEU",
+						"text": "Germany",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GHA",
+						"text": "Ghana",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GIB",
+						"text": "Gibraltar",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GRC",
+						"text": "Greece",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GRL",
+						"text": "Greenland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GRD",
+						"text": "Grenada",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GLP",
+						"text": "Guadeloupe",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GUM",
+						"text": "Guam",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GTM",
+						"text": "Guatemala",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GGY",
+						"text": "Guernsey",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GIN",
+						"text": "Guinea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GNB",
+						"text": "Guinea-Bissau",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GUY",
+						"text": "Guyana",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HTI",
+						"text": "Haiti",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VAT",
+						"text": "Vatican City",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HND",
+						"text": "Honduras",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HKG",
+						"text": "Hong Kong SAR",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HUN",
+						"text": "Hungary",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ISL",
+						"text": "Iceland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IND",
+						"text": "India",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IDN",
+						"text": "Indonesia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CIV",
+						"text": "Ivory Coast",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IRN",
+						"text": "Iran",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IRQ",
+						"text": "Iraq",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IRL",
+						"text": "Ireland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IMN",
+						"text": "Isle of Man",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ISR",
+						"text": "Israel",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ITA",
+						"text": "Italy",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "JAM",
+						"text": "Jamaica",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "JPN",
+						"text": "Japan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "JEY",
+						"text": "Jersey",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "JOR",
+						"text": "Jordan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KAZ",
+						"text": "Kazakhstan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KEN",
+						"text": "Kenya",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KIR",
+						"text": "Kiribati",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KWT",
+						"text": "Kuwait",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KGZ",
+						"text": "Kyrgyzstan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LAO",
+						"text": "Laos",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LVA",
+						"text": "Latvia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LBN",
+						"text": "Lebanon",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LSO",
+						"text": "Lesotho",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LBR",
+						"text": "Liberia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LBY",
+						"text": "Libya",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LIE",
+						"text": "Liechtenstein",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LTU",
+						"text": "Lithuania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LUX",
+						"text": "Luxembourg",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MAC",
+						"text": "Macau SAR",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MKD",
+						"text": "North Macedonia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MDG",
+						"text": "Madagascar",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MWI",
+						"text": "Malawi",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MYS",
+						"text": "Malaysia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MDV",
+						"text": "Maldives",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MLI",
+						"text": "Mali",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MLT",
+						"text": "Malta",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MHL",
+						"text": "Marshall Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MTQ",
+						"text": "Martinique",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MRT",
+						"text": "Mauritania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MUS",
+						"text": "Mauritius",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MYT",
+						"text": "Mayotte",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MEX",
+						"text": "Mexico",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FSM",
+						"text": "Micronesia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MDA",
+						"text": "Moldova",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MCO",
+						"text": "Monaco",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MNG",
+						"text": "Mongolia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MNE",
+						"text": "Montenegro",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MSR",
+						"text": "Montserrat",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MAR",
+						"text": "Morocco",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MOZ",
+						"text": "Mozambique",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MMR",
+						"text": "Myanmar",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NAM",
+						"text": "Namibia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NRU",
+						"text": "Nauru",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NPL",
+						"text": "Nepal",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NLD",
+						"text": "Netherlands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NCL",
+						"text": "New Caledonia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NZL",
+						"text": "New Zealand",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NIC",
+						"text": "Nicaragua",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NER",
+						"text": "Niger",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NGA",
+						"text": "Nigeria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NIU",
+						"text": "Niue",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NFK",
+						"text": "Norfolk Island",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MNP",
+						"text": "Northern Mariana Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NOR",
+						"text": "Norway",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "OMN",
+						"text": "Oman",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PAK",
+						"text": "Pakistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PLW",
+						"text": "Palau",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PSE",
+						"text": "Palestinian Territories",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PAN",
+						"text": "Panama",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PNG",
+						"text": "Papua New Guinea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PRY",
+						"text": "Paraguay",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PER",
+						"text": "Peru",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PHL",
+						"text": "Philippines",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PCN",
+						"text": "Pitcairn Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "POL",
+						"text": "Poland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PRT",
+						"text": "Portugal",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PRI",
+						"text": "Puerto Rico",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "QAT",
+						"text": "Qatar",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "RKS",
+						"text": "Kosovo",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "REU",
+						"text": "Réunion",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ROU",
+						"text": "Romania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "RUS",
+						"text": "Russia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "RWA",
+						"text": "Rwanda",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BLM",
+						"text": "Saint Barthélemy",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SHN",
+						"text": "Saint Helena, Ascension and Tristan da Cunha",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KNA",
+						"text": "Saint Kitts and Nevis",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LCA",
+						"text": "Saint Lucia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MAF",
+						"text": "Saint Martin",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SPM",
+						"text": "Saint Pierre and Miquelon",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VCT",
+						"text": "Saint Vincent and the Grenadines",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "WSM",
+						"text": "Samoa",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SMR",
+						"text": "San Marino",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "STP",
+						"text": "São Tomé and Príncipe",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SAU",
+						"text": "Saudi Arabia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SEN",
+						"text": "Senegal",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SRB",
+						"text": "Serbia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SYC",
+						"text": "Seychelles",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SLE",
+						"text": "Sierra Leone",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SGP",
+						"text": "Singapore",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SXM",
+						"text": "Sint Maarten",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SVK",
+						"text": "Slovakia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SVN",
+						"text": "Slovenia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SLB",
+						"text": "Solomon Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SOM",
+						"text": "Somalia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ZAF",
+						"text": "South Africa",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SGS",
+						"text": "South Georgia and the South Sandwich Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KOR",
+						"text": "South Korea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SSD",
+						"text": "South Sudan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ESP",
+						"text": "Spain",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LKA",
+						"text": "Sri Lanka",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SDN",
+						"text": "Sudan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SUR",
+						"text": "Suriname",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SJM",
+						"text": "Svalbard and Jan Mayen",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SWZ",
+						"text": "Eswatini",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SWE",
+						"text": "Sweden",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CHE",
+						"text": "Switzerland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SYR",
+						"text": "Syria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TWN",
+						"text": "Taiwan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TJK",
+						"text": "Tajikistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TZA",
+						"text": "Tanzania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "THA",
+						"text": "Thailand",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TLS",
+						"text": "East Timor",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TGO",
+						"text": "Togo",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TKL",
+						"text": "Tokelau",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TON",
+						"text": "Tonga",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TTO",
+						"text": "Trinidad and Tobago",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TUN",
+						"text": "Tunisia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TUR",
+						"text": "Türkiye",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TKM",
+						"text": "Turkmenistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TCA",
+						"text": "Turks and Caicos Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TUV",
+						"text": "Tuvalu",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "UGA",
+						"text": "Uganda",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "UKR",
+						"text": "Ukraine",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ARE",
+						"text": "United Arab Emirates",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GBR",
+						"text": "United Kingdom",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "USA",
+						"text": "United States",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "URY",
+						"text": "Uruguay",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "UZB",
+						"text": "Uzbekistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VUT",
+						"text": "Vanuatu",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VEN",
+						"text": "Venezuela",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VNM",
+						"text": "Vietnam",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "WLF",
+						"text": "Wallis and Futuna",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ZMB",
+						"text": "Zambia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ZWE",
+						"text": "Zimbabwe",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					}
+				],
+				"icon": {
+					"name": "document"
+				}
+			},
+			"relationships": {
+				"location": {
+					"data": {
+						"id": "COL",
+						"type": "LOCATION"
+					}
+				}
+			}
+		},
+		{
+			"id": "21fdded0-67a2-805d-8f3d-c9955a6413f0",
+			"type": "PROCEDURE",
+			"attributes": {
+				"category": "DOC_REQUIREMENT",
+				"subCategory": "BEFORE_ARRIVAL",
+				"title": "Recommended vaccinations for Colombia",
+				"description": "Travelers should consider:\n-Yellow Fever vaccination;\n-Hepatitis A and Hepatitis B vaccines;\n-Typhoid vaccine for visits to smaller cities or rural areas;\n-Routine vaccines including Measles;\n-Yellow Fever vaccination for travelers aged 9 months or older who are visiting areas of Colombia that are not the following: all areas above 2300 meters, the department of San Andres y Providencia, the capital city of Bogota, and the cities of Barranquilla, Cali, Cartagena, and Medellin.\n\nAdditional vaccine recommendations may apply. Consult your healthcare provider and check the source for details.",
+				"more": [],
+				"actions": [],
+				"sources": [
+					{
+						"type": "GOVERNMENT",
+						"title": "CDC - Colombia",
+						"url": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/colombia"
+					}
+				],
+				"lastUpdatedAt": "2026-03-10T12:24:00.000Z",
+				"createdAt": "2025-06-27T21:21:00.000Z",
+				"startDate": null,
+				"endDate": null,
+				"enforcement": "RECOMMENDED",
+				"documentTypes": [
+					"VACCINATION_CERTIFICATE"
+				],
+				"tags": [
+					"international",
+					"fully_vaccinated",
+					"not_vaccinated",
+					"air",
+					"land",
+					"sea",
+					"tourism",
+					"business",
+					"medical",
+					"transit"
+				],
+				"travelPurposes": [
+					"TOURISM",
+					"BUSINESS",
+					"MEDICAL",
+					"TRANSIT"
+				],
+				"included": [
+					{
+						"code": "AFG",
+						"text": "Afghanistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ALB",
+						"text": "Albania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DZA",
+						"text": "Algeria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AND",
+						"text": "Andorra",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ATG",
+						"text": "Antigua and Barbuda",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ARG",
+						"text": "Argentina",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ARM",
+						"text": "Armenia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AUS",
+						"text": "Australia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AUT",
+						"text": "Austria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AZE",
+						"text": "Azerbaijan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BHS",
+						"text": "Bahamas",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BHR",
+						"text": "Bahrain",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BGD",
+						"text": "Bangladesh",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BRB",
+						"text": "Barbados",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BLR",
+						"text": "Belarus",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BEL",
+						"text": "Belgium",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BLZ",
+						"text": "Belize",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BEN",
+						"text": "Benin",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BMU",
+						"text": "Bermuda",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BTN",
+						"text": "Bhutan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BOL",
+						"text": "Bolivia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BIH",
+						"text": "Bosnia and Herzegovina",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BWA",
+						"text": "Botswana",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BRN",
+						"text": "Brunei",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BGR",
+						"text": "Bulgaria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BFA",
+						"text": "Burkina Faso",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BDI",
+						"text": "Burundi",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CPV",
+						"text": "Cape Verde",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KHM",
+						"text": "Cambodia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CMR",
+						"text": "Cameroon",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CAN",
+						"text": "Canada",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CAF",
+						"text": "Central African Republic",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TCD",
+						"text": "Chad",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CHL",
+						"text": "Chile",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CHN",
+						"text": "Mainland China",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "COM",
+						"text": "Comoros",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "COG",
+						"text": "Congo",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CRI",
+						"text": "Costa Rica",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HRV",
+						"text": "Croatia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CUB",
+						"text": "Cuba",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CYP",
+						"text": "Cyprus",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CZE",
+						"text": "Czech Republic",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DNK",
+						"text": "Denmark",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DJI",
+						"text": "Djibouti",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DMA",
+						"text": "Dominica",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DOM",
+						"text": "Dominican Republic",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TLS",
+						"text": "East Timor",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ECU",
+						"text": "Ecuador",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "EGY",
+						"text": "Egypt",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SLV",
+						"text": "El Salvador",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GNQ",
+						"text": "Equatorial Guinea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ERI",
+						"text": "Eritrea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "EST",
+						"text": "Estonia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SWZ",
+						"text": "Eswatini",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ETH",
+						"text": "Ethiopia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FJI",
+						"text": "Fiji",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FIN",
+						"text": "Finland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FRA",
+						"text": "France",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GAB",
+						"text": "Gabon",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GMB",
+						"text": "Gambia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GEO",
+						"text": "Georgia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DEU",
+						"text": "Germany",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GHA",
+						"text": "Ghana",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GRC",
+						"text": "Greece",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GRD",
+						"text": "Grenada",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GTM",
+						"text": "Guatemala",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GIN",
+						"text": "Guinea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GNB",
+						"text": "Guinea-Bissau",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GUY",
+						"text": "Guyana",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HTI",
+						"text": "Haiti",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HND",
+						"text": "Honduras",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HKG",
+						"text": "Hong Kong SAR",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HUN",
+						"text": "Hungary",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ISL",
+						"text": "Iceland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IND",
+						"text": "India",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IDN",
+						"text": "Indonesia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IRN",
+						"text": "Iran",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IRQ",
+						"text": "Iraq",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IRL",
+						"text": "Ireland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ISR",
+						"text": "Israel",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ITA",
+						"text": "Italy",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CIV",
+						"text": "Ivory Coast",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "JAM",
+						"text": "Jamaica",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "JPN",
+						"text": "Japan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "JOR",
+						"text": "Jordan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KAZ",
+						"text": "Kazakhstan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KEN",
+						"text": "Kenya",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KIR",
+						"text": "Kiribati",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "RKS",
+						"text": "Kosovo",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KWT",
+						"text": "Kuwait",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KGZ",
+						"text": "Kyrgyzstan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LAO",
+						"text": "Laos",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LVA",
+						"text": "Latvia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LBN",
+						"text": "Lebanon",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LSO",
+						"text": "Lesotho",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LBR",
+						"text": "Liberia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LBY",
+						"text": "Libya",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LIE",
+						"text": "Liechtenstein",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LTU",
+						"text": "Lithuania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LUX",
+						"text": "Luxembourg",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MAC",
+						"text": "Macau SAR",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MDG",
+						"text": "Madagascar",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MWI",
+						"text": "Malawi",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MYS",
+						"text": "Malaysia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MDV",
+						"text": "Maldives",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MLI",
+						"text": "Mali",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MLT",
+						"text": "Malta",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MHL",
+						"text": "Marshall Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MRT",
+						"text": "Mauritania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MUS",
+						"text": "Mauritius",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MEX",
+						"text": "Mexico",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GUM",
+						"text": "Guam",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FSM",
+						"text": "Micronesia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NRU",
+						"text": "Nauru",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MNP",
+						"text": "Northern Mariana Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PLW",
+						"text": "Palau",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MDA",
+						"text": "Moldova",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MCO",
+						"text": "Monaco",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MNG",
+						"text": "Mongolia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MNE",
+						"text": "Montenegro",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MAR",
+						"text": "Morocco",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MOZ",
+						"text": "Mozambique",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MMR",
+						"text": "Myanmar",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NAM",
+						"text": "Namibia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NPL",
+						"text": "Nepal",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NLD",
+						"text": "Netherlands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NZL",
+						"text": "New Zealand",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NIC",
+						"text": "Nicaragua",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NER",
+						"text": "Niger",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NGA",
+						"text": "Nigeria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MKD",
+						"text": "North Macedonia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NOR",
+						"text": "Norway",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "OMN",
+						"text": "Oman",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PAK",
+						"text": "Pakistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PSE",
+						"text": "Palestinian Territories",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PAN",
+						"text": "Panama",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PNG",
+						"text": "Papua New Guinea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PRY",
+						"text": "Paraguay",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PER",
+						"text": "Peru",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PHL",
+						"text": "Philippines",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "POL",
+						"text": "Poland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PRT",
+						"text": "Portugal",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "QAT",
+						"text": "Qatar",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ROU",
+						"text": "Romania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "RUS",
+						"text": "Russia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "RWA",
+						"text": "Rwanda",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KNA",
+						"text": "Saint Kitts and Nevis",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LCA",
+						"text": "Saint Lucia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VCT",
+						"text": "Saint Vincent and the Grenadines",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "WSM",
+						"text": "Samoa",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SMR",
+						"text": "San Marino",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "STP",
+						"text": "São Tomé and Príncipe",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SAU",
+						"text": "Saudi Arabia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SEN",
+						"text": "Senegal",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SRB",
+						"text": "Serbia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SYC",
+						"text": "Seychelles",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SLE",
+						"text": "Sierra Leone",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SGP",
+						"text": "Singapore",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SVK",
+						"text": "Slovakia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SVN",
+						"text": "Slovenia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SLB",
+						"text": "Solomon Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SOM",
+						"text": "Somalia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ZAF",
+						"text": "South Africa",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KOR",
+						"text": "South Korea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SSD",
+						"text": "South Sudan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ESP",
+						"text": "Spain",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LKA",
+						"text": "Sri Lanka",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SDN",
+						"text": "Sudan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SUR",
+						"text": "Suriname",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SWE",
+						"text": "Sweden",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CHE",
+						"text": "Switzerland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SYR",
+						"text": "Syria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TWN",
+						"text": "Taiwan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TJK",
+						"text": "Tajikistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TZA",
+						"text": "Tanzania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "THA",
+						"text": "Thailand",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TGO",
+						"text": "Togo",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TON",
+						"text": "Tonga",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TTO",
+						"text": "Trinidad and Tobago",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TUN",
+						"text": "Tunisia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TUR",
+						"text": "Türkiye",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TKM",
+						"text": "Turkmenistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TUV",
+						"text": "Tuvalu",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "UKR",
+						"text": "Ukraine",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ARE",
+						"text": "United Arab Emirates",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "USA",
+						"text": "United States",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "URY",
+						"text": "Uruguay",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "UZB",
+						"text": "Uzbekistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VUT",
+						"text": "Vanuatu",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VAT",
+						"text": "Vatican City",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VEN",
+						"text": "Venezuela",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VNM",
+						"text": "Vietnam",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ZMB",
+						"text": "Zambia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ZWE",
+						"text": "Zimbabwe",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					}
+				],
+				"icon": {
+					"name": "document"
+				}
+			},
+			"relationships": {
+				"location": {
+					"data": {
+						"id": "COL",
+						"type": "LOCATION"
+					}
+				}
+			}
+		},
+		{
+			"id": "acaaa925-076e-44de-9de3-33552d483c09",
+			"type": "PROCEDURE",
+			"attributes": {
+				"category": "COVID_19_TEST",
+				"subCategory": "BEFORE_ARRIVAL",
+				"title": "Proof of pre-departure COVID-19 test is not required",
+				"description": "Travelers don’t need a COVID-19 test before traveling to Colombia. ",
+				"more": [],
+				"actions": [],
+				"sources": [
+					{
+						"type": "GOVERNMENT",
+						"title": "Colombian Ministry of Health",
+						"url": "https://turquia.embajada.gov.co/newsroom/news/colombia-no-exige-el-certificado-de-vacunacion-contra-covid-19-los-viajeros"
+					}
+				],
+				"lastUpdatedAt": "2026-03-10T11:58:00.000Z",
+				"createdAt": "2022-01-21T15:12:00.000Z",
+				"startDate": "2021-12-14T00:00:00.000Z",
+				"endDate": null,
+				"enforcement": "NOT_REQUIRED",
+				"tags": [
+					"international",
+					"fully_vaccinated",
+					"not_vaccinated",
+					"air",
+					"tourism",
+					"medical",
+					"business",
+					"transit"
+				],
+				"travelPurposes": [
+					"TOURISM",
+					"MEDICAL",
+					"BUSINESS",
+					"TRANSIT"
+				],
+				"included": [
+					{
+						"code": "AFG",
+						"text": "Afghanistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ALA",
+						"text": "Åland Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ALB",
+						"text": "Albania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DZA",
+						"text": "Algeria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ASM",
+						"text": "American Samoa",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AND",
+						"text": "Andorra",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AGO",
+						"text": "Angola",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AIA",
+						"text": "Anguilla",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ATG",
+						"text": "Antigua and Barbuda",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ARG",
+						"text": "Argentina",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ARM",
+						"text": "Armenia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ABW",
+						"text": "Aruba",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AUS",
+						"text": "Australia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AUT",
+						"text": "Austria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "AZE",
+						"text": "Azerbaijan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BHS",
+						"text": "Bahamas",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BHR",
+						"text": "Bahrain",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BGD",
+						"text": "Bangladesh",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BRB",
+						"text": "Barbados",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BLR",
+						"text": "Belarus",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BEL",
+						"text": "Belgium",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BLZ",
+						"text": "Belize",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BEN",
+						"text": "Benin",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BMU",
+						"text": "Bermuda",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BTN",
+						"text": "Bhutan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BOL",
+						"text": "Bolivia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BES",
+						"text": "Bonaire, Sint Eustatius and Saba",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BIH",
+						"text": "Bosnia and Herzegovina",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BWA",
+						"text": "Botswana",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BRA",
+						"text": "Brazil",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IOT",
+						"text": "British Indian Ocean Territory",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "UMI",
+						"text": "United States Minor Outlying Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VGB",
+						"text": "British Virgin Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VIR",
+						"text": "U.S. Virgin Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BRN",
+						"text": "Brunei",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BGR",
+						"text": "Bulgaria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BFA",
+						"text": "Burkina Faso",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BDI",
+						"text": "Burundi",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KHM",
+						"text": "Cambodia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CMR",
+						"text": "Cameroon",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CAN",
+						"text": "Canada",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CPV",
+						"text": "Cape Verde",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CYM",
+						"text": "Cayman Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CAF",
+						"text": "Central African Republic",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TCD",
+						"text": "Chad",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CHL",
+						"text": "Chile",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CHN",
+						"text": "Mainland China",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CXR",
+						"text": "Christmas Island",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CCK",
+						"text": "Cocos (Keeling) Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "COM",
+						"text": "Comoros",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "COG",
+						"text": "Congo",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "COD",
+						"text": "Democratic Republic of the Congo",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "COK",
+						"text": "Cook Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CRI",
+						"text": "Costa Rica",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HRV",
+						"text": "Croatia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CUB",
+						"text": "Cuba",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CUW",
+						"text": "Curaçao",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CYP",
+						"text": "Cyprus",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CZE",
+						"text": "Czech Republic",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DNK",
+						"text": "Denmark",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DJI",
+						"text": "Djibouti",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DMA",
+						"text": "Dominica",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DOM",
+						"text": "Dominican Republic",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ECU",
+						"text": "Ecuador",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "EGY",
+						"text": "Egypt",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SLV",
+						"text": "El Salvador",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GNQ",
+						"text": "Equatorial Guinea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ERI",
+						"text": "Eritrea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "EST",
+						"text": "Estonia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ETH",
+						"text": "Ethiopia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FLK",
+						"text": "Falkland Islands (Islas Malvinas)",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FRO",
+						"text": "Faroe Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FJI",
+						"text": "Fiji",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FIN",
+						"text": "Finland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FRA",
+						"text": "France",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GUF",
+						"text": "French Guiana",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PYF",
+						"text": "French Polynesia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GAB",
+						"text": "Gabon",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GMB",
+						"text": "Gambia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GEO",
+						"text": "Georgia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "DEU",
+						"text": "Germany",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GHA",
+						"text": "Ghana",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GIB",
+						"text": "Gibraltar",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GRC",
+						"text": "Greece",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GRL",
+						"text": "Greenland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GRD",
+						"text": "Grenada",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GLP",
+						"text": "Guadeloupe",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GUM",
+						"text": "Guam",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GTM",
+						"text": "Guatemala",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GGY",
+						"text": "Guernsey",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GIN",
+						"text": "Guinea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GNB",
+						"text": "Guinea-Bissau",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GUY",
+						"text": "Guyana",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HTI",
+						"text": "Haiti",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VAT",
+						"text": "Vatican City",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HND",
+						"text": "Honduras",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HKG",
+						"text": "Hong Kong SAR",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "HUN",
+						"text": "Hungary",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ISL",
+						"text": "Iceland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IND",
+						"text": "India",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IDN",
+						"text": "Indonesia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CIV",
+						"text": "Ivory Coast",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IRN",
+						"text": "Iran",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IRQ",
+						"text": "Iraq",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IRL",
+						"text": "Ireland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "IMN",
+						"text": "Isle of Man",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ISR",
+						"text": "Israel",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ITA",
+						"text": "Italy",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "JAM",
+						"text": "Jamaica",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "JPN",
+						"text": "Japan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "JEY",
+						"text": "Jersey",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "JOR",
+						"text": "Jordan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KAZ",
+						"text": "Kazakhstan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KEN",
+						"text": "Kenya",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KIR",
+						"text": "Kiribati",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KWT",
+						"text": "Kuwait",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KGZ",
+						"text": "Kyrgyzstan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LAO",
+						"text": "Laos",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LVA",
+						"text": "Latvia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LBN",
+						"text": "Lebanon",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LSO",
+						"text": "Lesotho",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LBR",
+						"text": "Liberia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LBY",
+						"text": "Libya",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LIE",
+						"text": "Liechtenstein",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LTU",
+						"text": "Lithuania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LUX",
+						"text": "Luxembourg",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MAC",
+						"text": "Macau SAR",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MKD",
+						"text": "North Macedonia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MDG",
+						"text": "Madagascar",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MWI",
+						"text": "Malawi",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MYS",
+						"text": "Malaysia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MDV",
+						"text": "Maldives",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MLI",
+						"text": "Mali",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MLT",
+						"text": "Malta",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MHL",
+						"text": "Marshall Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MTQ",
+						"text": "Martinique",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MRT",
+						"text": "Mauritania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MUS",
+						"text": "Mauritius",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MYT",
+						"text": "Mayotte",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MEX",
+						"text": "Mexico",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "FSM",
+						"text": "Micronesia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MDA",
+						"text": "Moldova",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MCO",
+						"text": "Monaco",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MNG",
+						"text": "Mongolia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MNE",
+						"text": "Montenegro",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MSR",
+						"text": "Montserrat",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MAR",
+						"text": "Morocco",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MOZ",
+						"text": "Mozambique",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MMR",
+						"text": "Myanmar",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NAM",
+						"text": "Namibia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NRU",
+						"text": "Nauru",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NPL",
+						"text": "Nepal",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NLD",
+						"text": "Netherlands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NCL",
+						"text": "New Caledonia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NZL",
+						"text": "New Zealand",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NIC",
+						"text": "Nicaragua",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NER",
+						"text": "Niger",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NGA",
+						"text": "Nigeria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NIU",
+						"text": "Niue",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NFK",
+						"text": "Norfolk Island",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MNP",
+						"text": "Northern Mariana Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "NOR",
+						"text": "Norway",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "OMN",
+						"text": "Oman",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PAK",
+						"text": "Pakistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PLW",
+						"text": "Palau",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PSE",
+						"text": "Palestinian Territories",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PAN",
+						"text": "Panama",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PNG",
+						"text": "Papua New Guinea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PRY",
+						"text": "Paraguay",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PER",
+						"text": "Peru",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PHL",
+						"text": "Philippines",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PCN",
+						"text": "Pitcairn Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "POL",
+						"text": "Poland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PRT",
+						"text": "Portugal",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "PRI",
+						"text": "Puerto Rico",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "QAT",
+						"text": "Qatar",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "RKS",
+						"text": "Kosovo",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "REU",
+						"text": "Réunion",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ROU",
+						"text": "Romania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "RUS",
+						"text": "Russia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "RWA",
+						"text": "Rwanda",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "BLM",
+						"text": "Saint Barthélemy",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SHN",
+						"text": "Saint Helena, Ascension and Tristan da Cunha",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KNA",
+						"text": "Saint Kitts and Nevis",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LCA",
+						"text": "Saint Lucia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "MAF",
+						"text": "Saint Martin",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SPM",
+						"text": "Saint Pierre and Miquelon",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VCT",
+						"text": "Saint Vincent and the Grenadines",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "WSM",
+						"text": "Samoa",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SMR",
+						"text": "San Marino",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "STP",
+						"text": "São Tomé and Príncipe",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SAU",
+						"text": "Saudi Arabia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SEN",
+						"text": "Senegal",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SRB",
+						"text": "Serbia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SYC",
+						"text": "Seychelles",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SLE",
+						"text": "Sierra Leone",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SGP",
+						"text": "Singapore",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SXM",
+						"text": "Sint Maarten",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SVK",
+						"text": "Slovakia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SVN",
+						"text": "Slovenia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SLB",
+						"text": "Solomon Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SOM",
+						"text": "Somalia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ZAF",
+						"text": "South Africa",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SGS",
+						"text": "South Georgia and the South Sandwich Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "KOR",
+						"text": "South Korea",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SSD",
+						"text": "South Sudan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ESP",
+						"text": "Spain",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "LKA",
+						"text": "Sri Lanka",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SDN",
+						"text": "Sudan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SUR",
+						"text": "Suriname",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SJM",
+						"text": "Svalbard and Jan Mayen",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SWZ",
+						"text": "Eswatini",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SWE",
+						"text": "Sweden",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "CHE",
+						"text": "Switzerland",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "SYR",
+						"text": "Syria",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TWN",
+						"text": "Taiwan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TJK",
+						"text": "Tajikistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TZA",
+						"text": "Tanzania",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "THA",
+						"text": "Thailand",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TLS",
+						"text": "East Timor",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TGO",
+						"text": "Togo",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TKL",
+						"text": "Tokelau",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TON",
+						"text": "Tonga",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TTO",
+						"text": "Trinidad and Tobago",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TUN",
+						"text": "Tunisia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TUR",
+						"text": "Türkiye",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TKM",
+						"text": "Turkmenistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TCA",
+						"text": "Turks and Caicos Islands",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "TUV",
+						"text": "Tuvalu",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "UGA",
+						"text": "Uganda",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "UKR",
+						"text": "Ukraine",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ARE",
+						"text": "United Arab Emirates",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "GBR",
+						"text": "United Kingdom",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "USA",
+						"text": "United States",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "URY",
+						"text": "Uruguay",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "UZB",
+						"text": "Uzbekistan",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VUT",
+						"text": "Vanuatu",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VEN",
+						"text": "Venezuela",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "VNM",
+						"text": "Vietnam",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "WLF",
+						"text": "Wallis and Futuna",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ZMB",
+						"text": "Zambia",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					},
+					{
+						"code": "ZWE",
+						"text": "Zimbabwe",
+						"type": "LOCATION",
+						"locationType": "ORIGIN"
+					}
+				],
+				"icon": {
+					"name": "covid19"
+				}
+			},
+			"relationships": {
+				"location": {
+					"data": {
+						"id": "COL",
+						"type": "LOCATION"
+					}
+				}
+			}
+		},
+		{
+			"id": "generated-procedure-notRequired-visa-COL",
+			"type": "PROCEDURE",
+			"attributes": {
+				"category": "DOC_REQUIREMENT",
+				"subCategory": "BEFORE_ARRIVAL",
+				"title": "No Visa Required",
+				"description": "If you have a Colombian passport, you're good to go.",
+				"enforcement": "NOT_REQUIRED",
+				"more": [],
+				"documentTypes": [
+					"VISA"
+				],
+				"actions": [],
+				"tags": [
+					"generated"
+				],
+				"startDate": null,
+				"endDate": null,
+				"sources": [
+					{
+						"type": "UNKNOWN",
+						"title": "Source not available",
+						"url": ""
+					}
+				],
+				"lastUpdatedAt": null,
+				"createdAt": null,
+				"icon": {
+					"name": "visa"
+				}
+			},
+			"relationships": {
+				"location": {
+					"data": {
+						"id": "COL",
+						"type": "LOCATION"
+					}
+				}
+			}
+		},
+		{
+			"id": "generated-procedure-prescription-medication-COL",
+			"attributes": {
+				"category": "DOC_REQUIREMENT",
+				"subCategory": "ON_ARRIVAL",
+				"title": "You may need prescription medication for Malaria and Travelers Diarrhea",
+				"description": "Check with your doctor or a travel clinic to see if you need any medications for your trip. If you go through our partner, Runway Health, you can initiate an online consultation with a doctor and have your medications delivered to your door. Depending on your location, medications typically arrive within 3-5 business days.",
+				"more": [],
+				"actions": [
+					{
+						"type": "LINK",
+						"title": "Find the right medications for your trip",
+						"url": "https://go.runwayhealth.com/sherpa-CO"
+					}
+				],
+				"sources": [
+					{
+						"type": "ORGANIZATION",
+						"title": "Runway Health",
+						"url": "https://go.runwayhealth.com/sherpa-CO"
+					}
+				],
+				"startDate": null,
+				"endDate": null,
+				"enforcement": "RECOMMENDED",
+				"lastUpdatedAt": "2026-03-11T01:15:10.760Z",
+				"createdAt": "2026-03-11T01:15:10.760Z",
+				"tags": [
+					"international",
+					"fully_vaccinated",
+					"not_vaccinated",
+					"air",
+					"land"
+				],
+				"included": [],
+				"icon": {
+					"name": "medication"
+				},
+				"country": "COL"
+			},
+			"relationships": {
+				"location": {
+					"data": {
+						"id": "COL",
+						"type": "LOCATION"
+					}
+				}
+			}
+		}
+	]
+}
