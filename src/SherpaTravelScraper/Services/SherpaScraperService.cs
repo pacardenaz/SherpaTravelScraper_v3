@@ -444,46 +444,103 @@ public class SherpaScraperService : IAsyncDisposable
 
     private async Task SeleccionarPaisEnCampoAsync(IPage page, string fieldLabel, string countryName)
     {
-        // Abrir selector
-        var btn = page.Locator($"button:has-text('{fieldLabel}')").First;
-        await btn.ClickAsync(new() { Timeout = 4000 });
-        await page.WaitForTimeoutAsync(300);
-
-        // Buscar input activo de overlay
-        var input = page.Locator(".cdk-overlay-pane input, input.mat-mdc-input-element, input[placeholder*='Search']").First;
-        await input.FillAsync(countryName, new() { Timeout = 3000 });
-        await page.WaitForTimeoutAsync(350);
-
-        // Seleccionar opción (intentos)
-        var options = new[]
+        try
         {
-            $"[role='option']:has-text('{countryName}')",
-            $".mat-mdc-option:has-text('{countryName}')",
-            $".mat-mdc-list-item:has-text('{countryName}')",
-            ".mat-mdc-option:first-child",
-            ".mat-mdc-list-item:first-child"
-        };
-
-        foreach (var selector in options)
-        {
+            // 1) Abrir selector (normal o JS click si hay overlay)
+            var opened = false;
             try
             {
-                var opt = page.Locator(selector).First;
-                if (await opt.IsVisibleAsync(new() { Timeout = 1200 }))
-                {
-                    await opt.ClickAsync(new() { Timeout = 2000 });
-                    await page.WaitForTimeoutAsync(300);
-                    return;
-                }
+                var btn = page.Locator($"button:has-text('{fieldLabel}')").First;
+                await btn.ClickAsync(new() { Timeout = 2500 });
+                opened = true;
             }
-            catch { }
-        }
+            catch
+            {
+                opened = await TryJsClickIfVisibleAsync(page, $"button:has-text('{fieldLabel}')", 1500);
+            }
 
-        // fallback teclado
-        await page.Keyboard.PressAsync("ArrowDown");
-        await page.Keyboard.PressAsync("Enter");
-        await page.WaitForTimeoutAsync(300);
+            if (!opened)
+            {
+                _logger.LogWarning("⚠️ No se pudo abrir selector para campo {Field}", fieldLabel);
+                return;
+            }
+
+            await page.WaitForTimeoutAsync(250);
+
+            // 2) Buscar input visible real del overlay
+            ILocator? input = null;
+            var inputSelectors = new[]
+            {
+                ".cdk-overlay-pane input:visible",
+                "input[placeholder*='Search']:visible",
+                "input.mat-mdc-input-element:visible",
+                "input[role='combobox']:visible"
+            };
+
+            foreach (var sel in inputSelectors)
+            {
+                try
+                {
+                    var loc = page.Locator(sel).First;
+                    if (await loc.IsVisibleAsync(new() { Timeout = 1200 }))
+                    {
+                        input = loc;
+                        break;
+                    }
+                }
+                catch { }
+            }
+
+            if (input == null)
+            {
+                _logger.LogWarning("⚠️ No se encontró input visible para {Field}", fieldLabel);
+                return;
+            }
+
+            // 3) Escribir país
+            await input.ClickAsync(new() { Timeout = 1500 });
+            await input.PressAsync("Control+A");
+            await input.PressAsync("Backspace");
+            await input.FillAsync(countryName, new() { Timeout = 2500 });
+            await page.WaitForTimeoutAsync(400);
+
+            // 4) Seleccionar opción (intentos)
+            var options = new[]
+            {
+                $"[role='option']:has-text('{countryName}')",
+                $".mat-mdc-option:has-text('{countryName}')",
+                $".mat-mdc-list-item:has-text('{countryName}')",
+                "[role='option']:visible",
+                ".mat-mdc-option:visible",
+                ".mat-mdc-list-item:visible"
+            };
+
+            foreach (var selector in options)
+            {
+                try
+                {
+                    var opt = page.Locator(selector).First;
+                    if (await opt.IsVisibleAsync(new() { Timeout = 1200 }))
+                    {
+                        await opt.ClickAsync(new() { Timeout = 1800 });
+                        await page.WaitForTimeoutAsync(250);
+                        return;
+                    }
+                }
+                catch { }
+            }
+
+            // 5) Fallback teclado
+            await page.Keyboard.PressAsync("ArrowDown");
+            await page.Keyboard.PressAsync("Enter");
+            await page.WaitForTimeoutAsync(250);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "⚠️ Falló selección de país {Country} en campo {Field}", countryName, fieldLabel);
+        }
     }
+
 
     /// <summary>
     /// Espera a que el contenido real de requisitos esté cargado (tabs Departure/Return visibles)
