@@ -173,12 +173,12 @@ public class TravelScrapingOrchestrator
             _logger.LogDebug("Procesando: {Origen} -> {Destino} ({Idioma})", 
                 combinacion.Origen, combinacion.Destino, combinacion.Idioma);
 
-            // Realizar scraping
+            // Realizar scraping (REQ-SHERPA-003: Estrategia híbrida)
             var fechaBase = DateTime.Now;
-            var resultado = await _scraper.ScrapearRequisitosAsync(
-                combinacion.Origen, 
-                combinacion.Destino, 
-                combinacion.Idioma, 
+            var resultado = await _scraper.ScrapearConEstrategiaHibridaAsync(
+                combinacion.Origen,
+                combinacion.Destino,
+                combinacion.Idioma,
                 fechaBase,
                 combinacion.TipoNacionalidad);
 
