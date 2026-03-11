@@ -1585,35 +1585,61 @@ public class SherpaScraperService : IAsyncDisposable
             
             try
             {
-                // Usar WaitForResponseAsync para capturar explícitamente la respuesta después del click
+                // Configurar captura de respuesta ANTES de hacer click
                 var responseTask = page.WaitForResponseAsync(
-                    resp => resp.Url.Contains("requirements-api.joinsherpa.com") && 
-                            resp.Url.Contains("/trips") && 
-                            resp.Url.Contains("include=restriction,procedure"),
-                    new PageWaitForResponseOptions { Timeout = 10000 });
+                    resp => {
+                        var url = resp.Url.ToLowerInvariant();
+                        var matches = url.Contains("requirements-api") && 
+                                     url.Contains("trips") && 
+                                     url.Contains("restriction");
+                        if (matches)
+                        {
+                            _logger.LogDebug("🌐 Respuesta detectada: {Url}", resp.Url);
+                        }
+                        return matches;
+                    },
+                    new PageWaitForResponseOptions { Timeout = 15000 });
                 
-                // Hacer click en el tab Return
+                // Hacer click en el tab Return PRIMERO
                 await ActivarTabAsync(page, "Return");
                 
+                // Dar tiempo para que inicie la petición
+                await Task.Delay(500);
+                
                 // Esperar la respuesta
+                _logger.LogDebug("⏳ Esperando respuesta de API Return (timeout 15s)...");
                 var response = await responseTask;
                 
                 if (response != null && response.Status == 200)
                 {
                     returnJson = await response.TextAsync();
-                    _logger.LogInformation("📡 JSON Return capturado via WaitForResponse: {Size} chars", returnJson?.Length ?? 0);
+                    _logger.LogInformation("📡 JSON Return capturado: {Size} chars", returnJson?.Length ?? 0);
+                }
+                else if (response != null)
+                {
+                    _logger.LogWarning("⚠️ Respuesta Return con status: {Status}", response.Status);
                 }
             }
             catch (TimeoutException)
             {
-                _logger.LogWarning("⚠️ Timeout esperando respuesta de Return, intentando con collector...");
-                // Fallback: intentar obtener del collector
-                returnJson = await EsperarJsonConTimeoutAsync(collector, TabExtraccion.Return, timeoutMs: 3000);
+                _logger.LogWarning("⚠️ Timeout esperando respuesta de Return");
+            }
+            
+            // Fallback: intentar obtener del collector si WaitForResponse falló
+            if (string.IsNullOrWhiteSpace(returnJson))
+            {
+                _logger.LogDebug("🔄 Fallback: intentando obtener JSON Return del collector...");
+                returnJson = await EsperarJsonConTimeoutAsync(collector, TabExtraccion.Return, timeoutMs: 5000);
+                
+                if (!string.IsNullOrWhiteSpace(returnJson))
+                {
+                    _logger.LogInformation("📡 JSON Return capturado via collector: {Size} chars", returnJson.Length);
+                }
             }
             
             if (string.IsNullOrWhiteSpace(returnJson))
             {
-                _logger.LogWarning("⚠️ No se pudo capturar JSON de Return");
+                _logger.LogWarning("⚠️ No se pudo capturar JSON de Return por ningún método");
             }
         }
 
