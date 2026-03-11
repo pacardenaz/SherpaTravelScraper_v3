@@ -1863,9 +1863,8 @@ public class SherpaScraperService : IAsyncDisposable
     #region REQ-SHERPA-003: Estrategia Híbrida de Scraping
 
     /// <summary>
-    /// Realiza scraping usando estrategia híbrida:
-    /// 1. Intenta navegación directa por URL con parámetros
-    /// 2. Si falla, hace fallback a llenado de formulario
+    /// Realiza scraping usando únicamente navegación directa por URL con parámetros
+    /// y extracción vía interceptación de red de la API trips
     /// </summary>
     public async Task<ScrapingResult> ScrapearConEstrategiaHibridaAsync(
         string origenIso3,
@@ -1880,10 +1879,10 @@ public class SherpaScraperService : IAsyncDisposable
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         var tabExtraccion = ResolverTabExtraccion(tipoNacionalidad);
         
-        _logger.LogInformation("🚀 REQ-SHERPA-003: Iniciando scraping híbrido - {Origen} -> {Destino} (Tipo: {Tipo})",
+        _logger.LogInformation("🚀 REQ-SHERPA-003: Iniciando scraping por URL directa - {Origen} -> {Destino} (Tipo: {Tipo})",
             origenIso3, destinoIso3, tipoNacionalidad ?? "AMBOS");
 
-        // PASO 1: Intentar URL directa
+        // Solo usar URL directa con interceptación de red
         var directUrlResult = await IntentarScrapeoDirectoAsync(
             origenIso3, destinoIso3, idioma, fechaBase, tabExtraccion, CancellationToken.None);
         
@@ -1899,46 +1898,17 @@ public class SherpaScraperService : IAsyncDisposable
             return directUrlResult;
         }
         
-        // PASO 2: Fallback a formulario
-        _logger.LogInformation(
-            "🔄 REQ-SHERPA-003: URL directa no funcionó o incompleta, procediendo con fallback a formulario...");
+        // Si falla, retornar error (no hay fallback a formulario)
+        stopwatch.Stop();
         
-        try
-        {
-            var formResult = await ScrapearRequisitosAsync(
-                origenIso3, destinoIso3, idioma, fechaBase, tipoNacionalidad);
-            
-            stopwatch.Stop();
-            
-            // Convertir ResultadoScraping a ScrapingResult
-            var result = new ScrapingResult
-            {
-                DepartureHtml = formResult.HtmlRaw, // El HTML crudo contiene ambos tabs
-                ReturnHtml = null, // Se almacena en el mismo HTML
-                UsedMethod = ScrapingMethod.FormFill,
-                Duration = stopwatch.Elapsed,
-                UrlUsed = formResult.UrlConsultada,
-                ErrorMessage = formResult.MensajeError
-            };
-            
-            _logger.LogInformation(
-                "✅ REQ-SHERPA-003: Scraping exitoso por formulario en {Duration}ms - {Origen}->{Destino}",
-                stopwatch.ElapsedMilliseconds, origenIso3, destinoIso3);
-            
-            return result;
-        }
-        catch (Exception ex)
-        {
-            stopwatch.Stop();
-            
-            _logger.LogError(ex,
-                "❌ REQ-SHERPA-003: Falló tanto URL directa como formulario - {Origen}->{Destino}",
-                origenIso3, destinoIso3);
-            
-            return ScrapingResult.Failure(
-                $"Falló tanto URL directa como formulario: {ex.Message}",
-                ScrapingMethod.FormFill);
-        }
+        var errorMsg = directUrlResult?.ErrorMessage ?? "URL directa no devolvió contenido válido";
+        _logger.LogError(
+            "❌ REQ-SHERPA-003: URL directa falló - {Origen}->{Destino} - {Error}",
+            origenIso3, destinoIso3, errorMsg);
+        
+        return ScrapingResult.Failure(
+            $"URL directa falló: {errorMsg}",
+            directUrlResult?.UsedMethod ?? ScrapingMethod.DirectUrl);
     }
 
     /// <summary>
