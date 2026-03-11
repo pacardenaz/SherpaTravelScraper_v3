@@ -1569,25 +1569,37 @@ public class SherpaScraperService : IAsyncDisposable
         string htmlRaw)
     {
         collector.SetSegment(TabExtraccion.Departure);
-        await page.WaitForTimeoutAsync(1500);
+        
+        // Esperar a que se cargue el JSON de Departure (con timeout)
+        var departureJson = await EsperarJsonConTimeoutAsync(collector, TabExtraccion.Departure, timeoutMs: 5000);
+        _logger.LogDebug("JSON Departure capturado: {Size} chars", departureJson?.Length ?? 0);
 
+        string? returnJson = null;
         if (tabExtraccion is TabExtraccion.Return or TabExtraccion.Ambos)
         {
+            // Cambiar a segmento Return ANTES de hacer click
             collector.SetSegment(TabExtraccion.Return);
+            
+            // Hacer click en el tab Return
             await ActivarTabAsync(page, "Return");
-            await page.WaitForTimeoutAsync(2000);
+            
+            // Esperar a que llegue el JSON de Return (con timeout más largo porque requiere nueva llamada API)
+            returnJson = await EsperarJsonConTimeoutAsync(collector, TabExtraccion.Return, timeoutMs: 8000);
+            _logger.LogDebug("JSON Return capturado: {Size} chars", returnJson?.Length ?? 0);
         }
 
-        var departureJson = tabExtraccion is TabExtraccion.Departure or TabExtraccion.Ambos
-            ? collector.GetLatestPayload(TabExtraccion.Departure)
-            : null;
-
-        var returnJson = tabExtraccion is TabExtraccion.Return or TabExtraccion.Ambos
-            ? collector.GetLatestPayload(TabExtraccion.Return)
-            : null;
-
-        if (!collector.HasValidJsonFor(tabExtraccion))
+        // Validar que tenemos los JSON necesarios
+        var hasDeparture = !string.IsNullOrWhiteSpace(departureJson);
+        var hasReturn = !string.IsNullOrWhiteSpace(returnJson);
+        
+        var requiereDeparture = tabExtraccion is TabExtraccion.Departure or TabExtraccion.Ambos;
+        var requiereReturn = tabExtraccion is TabExtraccion.Return or TabExtraccion.Ambos;
+        
+        if ((requiereDeparture && !hasDeparture) || (requiereReturn && !hasReturn))
         {
+            _logger.LogWarning(
+                "No se capturaron todos los JSON requeridos - Departure: {HasDeparture}, Return: {HasReturn}",
+                hasDeparture, hasReturn);
             return null;
         }
 
@@ -1882,6 +1894,31 @@ public class SherpaScraperService : IAsyncDisposable
             _ => !string.IsNullOrWhiteSpace(GetLatestPayload(TabExtraccion.Departure)) ||
                  !string.IsNullOrWhiteSpace(GetLatestPayload(TabExtraccion.Return))
         };
+    }
+
+    /// <summary>
+    /// Espera a que llegue el JSON de un segmento específico con timeout y polling
+    /// </summary>
+    private async Task<string?> EsperarJsonConTimeoutAsync(
+        NetworkJsonCollector collector,
+        TabExtraccion segment,
+        int timeoutMs = 5000,
+        int pollingIntervalMs = 500)
+    {
+        var startTime = DateTime.UtcNow;
+        
+        while ((DateTime.UtcNow - startTime).TotalMilliseconds < timeoutMs)
+        {
+            var payload = collector.GetLatestPayload(segment);
+            if (!string.IsNullOrWhiteSpace(payload))
+            {
+                return payload;
+            }
+            
+            await Task.Delay(pollingIntervalMs);
+        }
+        
+        return null;
     }
 
     #region REQ-SHERPA-003: Estrategia Híbrida de Scraping
