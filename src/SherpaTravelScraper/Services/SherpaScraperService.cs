@@ -1531,23 +1531,45 @@ public class SherpaScraperService : IAsyncDisposable
         }
 
         var modelo = MapearNetworkJsonARequisitos(origen, destino, idioma, departureJson, returnJson, tabExtraccion);
-        var payload = new
+
+        // JSON #1 (resumido): solo lo que representa lo visible en pantalla
+        var resumenPayload = new
         {
             metodoExtraccion = "network-json",
             infoViaje = modelo.InfoViaje,
             departure = modelo.Departure,
             @return = modelo.Return,
-            raw = new { departure = departureJson, @return = returnJson }
+            tabs = tabExtraccion.ToString()
         };
 
-        var datosJson = JsonSerializer.Serialize(payload, new JsonSerializerOptions
+        // JSON #2 (crudo): payload original capturado de red
+        var rawPayload = new
+        {
+            metodoExtraccion = "network-json",
+            capturedAt = DateTime.UtcNow,
+            tabs = tabExtraccion.ToString(),
+            raw = new
+            {
+                departure = departureJson,
+                @return = returnJson
+            }
+        };
+
+        var datosJson = JsonSerializer.Serialize(resumenPayload, new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+
+        var rawJson = JsonSerializer.Serialize(rawPayload, new JsonSerializerOptions
         {
             WriteIndented = true,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         });
 
         return ResultadoScraping.Exito(
-            datos: datosJson,
+            datos: datosJson,          // reqvd_datos_json -> RESUMEN
+            markdown: rawJson,         // reqvd_markdown   -> RAW JSON
             url: url,
             htmlRaw: htmlRaw,
             requisitosDestino: ConstruirResumenTramo(modelo.Departure),
@@ -1652,6 +1674,50 @@ public class SherpaScraperService : IAsyncDisposable
 
     private static string? ExtraerTextoPorClaves(string content, params string[] keys)
     {
+        if (string.IsNullOrWhiteSpace(content)) return null;
+
+        // Intentar parsear JSON y extraer textos más limpios por nombre de propiedad
+        try
+        {
+            using var doc = JsonDocument.Parse(content);
+            var matches = new List<string>();
+
+            void Walk(JsonElement el, string? prop)
+            {
+                switch (el.ValueKind)
+                {
+                    case JsonValueKind.Object:
+                        foreach (var p in el.EnumerateObject())
+                            Walk(p.Value, p.Name);
+                        break;
+                    case JsonValueKind.Array:
+                        foreach (var item in el.EnumerateArray())
+                            Walk(item, prop);
+                        break;
+                    case JsonValueKind.String:
+                        var v = el.GetString();
+                        if (string.IsNullOrWhiteSpace(v)) return;
+                        var k = (prop ?? string.Empty).ToLowerInvariant();
+                        var vv = v.ToLowerInvariant();
+                        if (keys.Any(x => k.Contains(x, StringComparison.OrdinalIgnoreCase) || vv.Contains(x, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            var clean = v.Trim();
+                            if (clean.Length > 8 && clean.Length < 300 && !matches.Contains(clean))
+                                matches.Add(clean);
+                        }
+                        break;
+                }
+            }
+
+            Walk(doc.RootElement, null);
+            if (matches.Count > 0)
+                return string.Join(" | ", matches.Take(6));
+        }
+        catch
+        {
+            // fallback texto plano
+        }
+
         var lines = content.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .Where(l => keys.Any(k => l.Contains(k, StringComparison.OrdinalIgnoreCase)))
             .Take(8)
@@ -1701,7 +1767,7 @@ public class SherpaScraperService : IAsyncDisposable
 
         public void SetSegment(TabExtraccion segment) => _currentSegment = segment;
 
-        public void OnResponseAsync(object? _, IResponse response)
+        public void OnResponseAsync(object sender, IResponse response)
             => _ = HandleResponseAsync(response);
 
         private async Task HandleResponseAsync(IResponse response)
