@@ -13,12 +13,12 @@ public class RequisitosViajeCompleto
     /// <summary>
     /// Requisitos para la ida (origen -> destino)
     /// </summary>
-    public RequisitosTramo Departure { get; set; } = new();
+    public RequisitosTramo? Departure { get; set; } = new();
     
     /// <summary>
     /// Requisitos para la vuelta (destino -> origen)
     /// </summary>
-    public RequisitosTramo Return { get; set; } = new();
+    public RequisitosTramo? Return { get; set; } = new();
     
     /// <summary>
     /// Notas y advertencias generales

@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -200,10 +201,12 @@ public class TravelRepository
         command.Parameters.AddWithValue("@EjecucionId", ejecucionId);
         command.Parameters.AddWithValue("@Origen", origen);
         command.Parameters.AddWithValue("@Destino", destino);
-        command.Parameters.AddWithValue("@RequisitosDestino", (object?)resultado.RequisitosDestino ?? DBNull.Value);
-        command.Parameters.AddWithValue("@RequisitosVisado", (object?)resultado.RequisitosVisado ?? DBNull.Value);
-        command.Parameters.AddWithValue("@Pasaportes", (object?)resultado.PasaportesDocumentos ?? DBNull.Value);
-        command.Parameters.AddWithValue("@Sanitarios", (object?)resultado.Sanitarios ?? DBNull.Value);
+
+        var esSoloReturn = string.Equals(resultado.TabsExtraidas, "Return", StringComparison.OrdinalIgnoreCase);
+        command.Parameters.AddWithValue("@RequisitosDestino", esSoloReturn ? DBNull.Value : (object?)resultado.RequisitosDestino ?? DBNull.Value);
+        command.Parameters.AddWithValue("@RequisitosVisado", esSoloReturn ? DBNull.Value : (object?)resultado.RequisitosVisado ?? DBNull.Value);
+        command.Parameters.AddWithValue("@Pasaportes", esSoloReturn ? DBNull.Value : (object?)resultado.PasaportesDocumentos ?? DBNull.Value);
+        command.Parameters.AddWithValue("@Sanitarios", esSoloReturn ? DBNull.Value : (object?)resultado.Sanitarios ?? DBNull.Value);
         command.Parameters.AddWithValue("@Idioma", idioma);
         command.Parameters.AddWithValue("@Url", url);
         command.Parameters.AddWithValue("@HtmlRaw", (object?)htmlRaw ?? DBNull.Value);
