@@ -76,10 +76,9 @@ public class ContentVerifier
             
             // Check 1: Verificar si los tabs están presentes
             result.HasDepartureTab = await IsAnyElementVisibleAsync(DepartureTabSelectors);
-            result.HasReturnTab = await IsAnyElementVisibleAsync(ReturnTabSelectors);
             
-            _logger.LogDebug("Tabs presentes - Departure: {HasDeparture}, Return: {HasReturn}", 
-                result.HasDepartureTab, result.HasReturnTab);
+            _logger.LogDebug("Tab presente - Departure: {HasDeparture}", 
+                result.HasDepartureTab);
             
             // Check 2: Obtener contenido del tab activo
             var activeTabContent = await GetActiveTabContentAsync();
@@ -103,11 +102,10 @@ public class ContentVerifier
             
             // Determinar éxito general
             // Consideramos exitoso si:
-            // - Ambos tabs están presentes (o al menos uno si es extracción parcial)
+            // - El tab Departure está presente
             // - El contenido es sustancial
             // - Hay keywords válidas
             result.IsValid = result.HasDepartureTab 
-                          && result.HasReturnTab 
                           && result.HasSubstantialContent
                           && result.HasValidContentKeywords;
             
@@ -116,11 +114,10 @@ public class ContentVerifier
             
             _logger.LogInformation(
                 "Verificación completada en {Duration}ms - Válido: {IsValid}, " +
-                "Departure: {Departure}, Return: {Return}, Content: {ContentLength} chars",
+                "Departure: {Departure}, Content: {ContentLength} chars",
                 result.VerificationDurationMs,
                 result.IsValid,
                 result.HasDepartureTab,
-                result.HasReturnTab,
                 result.ActiveTabContentLength);
             
             return result;
