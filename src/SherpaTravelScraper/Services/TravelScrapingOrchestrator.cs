@@ -182,7 +182,7 @@ public class TravelScrapingOrchestrator
                 fechaBase,
                 combinacion.TipoNacionalidad);
 
-            if (resultado.Exitoso)
+            if (resultado.IsSuccess)
             {
                 // Guardar resultado exitoso
                 await _repository.GuardarRequisitoAsync(
@@ -190,8 +190,6 @@ public class TravelScrapingOrchestrator
                     combinacion.Origen,
                     combinacion.Destino,
                     combinacion.Idioma,
-                    resultado.UrlConsultada,
-                    resultado.HtmlRaw,
                     resultado);
 
                 await _repository.MarcarCompletadaAsync(combinacion.Id);
@@ -201,10 +199,10 @@ public class TravelScrapingOrchestrator
             else
             {
                 // Determinar si es bloqueo
-                var esBloqueo = resultado.MensajeError?.Contains("BLOQUEO") == true ||
-                               resultado.MensajeError?.Contains("403") == true;
+                var esBloqueo = resultado.ErrorMessage?.Contains("BLOQUEO") == true ||
+                               resultado.ErrorMessage?.Contains("403") == true;
 
-                await _repository.MarcarFallidaAsync(combinacion.Id, resultado.MensajeError, esBloqueo);
+                await _repository.MarcarFallidaAsync(combinacion.Id, resultado.ErrorMessage, esBloqueo);
                 
                 if (esBloqueo)
                 {
@@ -219,7 +217,7 @@ public class TravelScrapingOrchestrator
                 {
                     _logger.LogWarning("✗ Fallida ({Intento}/{Max}): {Origen} -> {Destino} - {Error}",
                         combinacion.Reintentos + 1, maxReintentos,
-                        combinacion.Origen, combinacion.Destino, resultado.MensajeError);
+                        combinacion.Origen, combinacion.Destino, resultado.ErrorMessage);
                 }
             }
         }

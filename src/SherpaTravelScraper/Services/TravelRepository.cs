@@ -216,6 +216,37 @@ public class TravelRepository
     }
 
     /// <summary>
+    /// Guarda un requisito exitoso desde ScrapingResult (mapea a ResultadoScraping)
+    /// </summary>
+    public async Task GuardarRequisitoAsync(
+        int ejecucionId,
+        string origen,
+        string destino,
+        string idioma,
+        ScrapingResult resultado)
+    {
+        // Mapear ScrapingResult a ResultadoScraping
+        var resultadoScraping = new ResultadoScraping
+        {
+            Exitoso = resultado.IsSuccess,
+            UrlConsultada = resultado.UrlUsed ?? string.Empty,
+            HtmlRaw = resultado.DepartureHtml ?? resultado.ReturnHtml,
+            MensajeError = resultado.ErrorMessage,
+            // Campos de procesamiento quedan vacíos - se llenan en etapa de extracción con IA
+            RequisitosDestino = null,
+            RequisitosVisado = null,
+            PasaportesDocumentos = null,
+            Sanitarios = null,
+            Datos = null,
+            Markdown = null,
+            TabsExtraidas = resultado.IsPartial ? "Departure" : "Departure,Return"
+        };
+
+        await GuardarRequisitoAsync(ejecucionId, origen, destino, idioma, 
+            resultadoScraping.UrlConsultada, resultadoScraping.HtmlRaw, resultadoScraping);
+    }
+
+    /// <summary>
     /// Marca una combinación como completada
     /// </summary>
     public async Task MarcarCompletadaAsync(int combinacionId)
